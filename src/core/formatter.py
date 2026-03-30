@@ -25,7 +25,7 @@ class formatter:
     )->tuple[int, int, int, int]:
         shift_number = self.shifts.index(shift)
 
-        return employee, shift_number, day, self.weight_request
+        return employee, shift_number, day, self.weight_requests
     
     #TODO: add logic to add fixed assignments for specific days
 #e.g. ee 1 every wednesday needs to have the day off for education
