@@ -5,9 +5,11 @@ from ortools.sat.python import cp_model
 from formatter import formatter
 import numpy as np
 import csv
+import os
 
 import sys
 
+output_path = 'output'
 
 employees = np.arange(1, 31)
 days = np.arange(1, 32) # e.g. for march
@@ -140,7 +142,7 @@ if __name__=="__main__":
     status = solver.solve(model, solution_printer)
 
     if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
-        csv_path = "schedule.csv"
+        csv_path = os.path.join(output_path, "schedule.csv")
         with open(csv_path, "w", newline="") as csv_file:
             writer = csv.writer(csv_file)
             writer.writerow(["employee"] + [f"day_{d}" for d in days])
