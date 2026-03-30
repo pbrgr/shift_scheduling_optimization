@@ -41,6 +41,15 @@ employees_assignment_requests = [
     (1, 3, "2N")
 ]
 
+#transitions:
+#(previous_shift, next_shift, penalty)
+#0 means forbidden
+transitions = [
+    ("2N", "1N", -4),
+    ("1N", "3N", -4),
+    ("3N", "R", -4),
+    ("3N", "1N", 0)
+]
 
 #TODO: finish function
 def add_assignments_requests(
@@ -110,6 +119,27 @@ if __name__=="__main__":
             model.add(sum(assigned) >= min_ee)
             model.add(sum(assigned) <= max_ee)
 
+    #Reward Good Transitions:
+    for prev_shift, next_shift, reward in transitions:
+        prev_shift, next_shift, reward = formatter.reward_transitions(prev_shift,next_shift,reward)
+
+        for e in employees:
+            for d in days:
+                t = [
+                    ~work[e, prev_shift, d],
+                    ~work[e, next_shift, d + 1],
+                ]
+
+                if reward == 0:
+                    model.add_bool_or(t)
+                else:
+                    trans_var = model.new_bool_var(
+                        f"transition (employee={e}, day={d})"
+                    )
+                    t.append(trans_var)
+                    model.add_bool_or(t)
+                    obj_bool_vars.append(trans_var)
+                    obj_bool_coeffs.append(reward)
 
     #days off assignment:
     logger.info("Preparing fixed assignments")
