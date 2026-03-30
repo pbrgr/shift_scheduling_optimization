@@ -124,7 +124,7 @@ if __name__=="__main__":
         prev_shift, next_shift, reward = formatter.reward_transitions(prev_shift,next_shift,reward)
 
         for e in employees:
-            for d in days:
+            for d in days[:-1]:
                 t = [
                     ~work[e, prev_shift, d],
                     ~work[e, next_shift, d + 1],
