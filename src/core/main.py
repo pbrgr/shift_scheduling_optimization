@@ -2,6 +2,7 @@ from absl import app
 from absl import flags
 
 from ortools.sat.python import cp_model
+from formatter import formatter
 import numpy as np
 
 
@@ -12,10 +13,13 @@ shifts = ["1N", "2N", "3N", "R"]
 weight_shift_request = -2 #neg means that the requests always need to be formulated in a positive way
 #so that the ee wants that specific shift
 
-
 employees_dayoff_assignment = [
     (4, 2),
     (9, 15)
+]
+
+employees_fixed_assignment = [
+    (4, 5, "1N")
 ]
 
 employees_dayoff_requests = [
@@ -24,36 +28,9 @@ employees_dayoff_requests = [
     (7, 15)
 ]
 
-#fixed assignments, which ee has specific days off, or have to work a specific shift
-def get_fixed_assignment(
-        employee: int,
-        day: int,
-        shift: str,
-        shifts: list
-)->tuple[int, int, int]:
-    shift_number = shifts.index(shift)
-
-    return employee, shift_number, day
-
-#TODO: add logic to add fixed assignments for specific days
-#e.g. ee 1 every wednesday needs to have the day off for education
-
-
-
-#requests, so predefine weight, so that it is the same for all
-def get_employee_requests(
-        employee: int,
-        day: int,
-        shift: str,
-        shifts: list,
-        weight_request: int
-)->tuple[int, int, int, int]:
-    shift_number = shifts.index(shift)
-
-    return employee, shift_number, day, weight_request
-
-
-#TODO: add function for shift requests, so not day off, but specific shifts
+employees_assignment_requests = [
+    (1, 3, "2N")
+]
 
 
 #TODO: finish function
@@ -77,6 +54,7 @@ if __name__=="__main__":
     num_shifts = len(shifts)
 
     model = cp_model.CpModel()
+    formatter = formatter(shifts=shifts, weight_requests=weight_shift_request)
 
     # create work variable with domain {0, 1}
     work = {}
@@ -95,7 +73,7 @@ if __name__=="__main__":
     #days off assignment:
     fixed_assignments = []
     for ee, day in employees_dayoff_assignment:
-        fa = get_fixed_assignment(ee, day, "R", shifts)
+        fa = formatter.get_fixed_assignment(ee, day, "R")
         fixed_assignments.append(fa)
 
     #TODO: add other logic for assignment that need to be honored
@@ -105,7 +83,7 @@ if __name__=="__main__":
     #day off request
     requests = []
     for ee, day in employees_dayoff_requests:
-        req = get_employee_requests(ee, day, "R", shifts, weight_shift_request)
+        req = formatter.get_employee_requests(ee, day, "R")
         requests.append(req)
 
     #TODO: add other logic for requested shifts that are not days off
