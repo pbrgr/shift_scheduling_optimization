@@ -3,6 +3,7 @@ from absl import flags
 
 from ortools.sat.python import cp_model
 from formatter import formatter
+from logger import setup_logging
 import numpy as np
 import csv
 import os
@@ -65,12 +66,22 @@ def get_assigned_shift_name(solver, work, employee, day, shifts):
     return ""
 
 if __name__=="__main__":
+    logger = setup_logging(output_path)
     # num_days = len(days)
     # num_employees = len(employees)
     num_shifts = len(shifts)
 
+    logger.info("Starting schedule generation")
+    logger.info("Employees: %d", len(employees))
+    logger.info("Days: %d", len(days))
+    logger.info("Shifts: %s", shifts)
+    logger.info("Min employees per shift: %d", min_ee)
+    logger.info("Max employees per shift: %d", max_ee)
+
     model = cp_model.CpModel()
     formatter = formatter(shifts=shifts, weight_requests=weight_shift_request)
+
+    logger.info("Creating decision variables")
 
     # create work variable with domain {0, 1}
     work = {}
@@ -86,11 +97,13 @@ if __name__=="__main__":
     obj_bool_coeffs: list[int] = []
 
     # for each ee only one shift per day
+    logger.info("Adding one-shift-per-day constraints")
     for e in employees:
         for d in days:
             model.add_exactly_one(work[e, s, d] for s in range(num_shifts))
 
     #Cover constraints:
+    logger.info("Adding coverage constraints")
     for s in range(num_shifts-1): #need to not take R into account
         for d in days:
             assigned = [work[e, s, d] for e in employees]
@@ -99,6 +112,7 @@ if __name__=="__main__":
 
 
     #days off assignment:
+    logger.info("Preparing fixed assignments")
     fixed_assignments = []
     for ee, day in employees_dayoff_assignment:
         fa = formatter.get_fixed_assignment(ee, day, "R")
@@ -110,6 +124,9 @@ if __name__=="__main__":
         fa = formatter.get_fixed_assignment(ee, day, shift)
         fixed_assignments.append(fa)
 
+    logger.info("Fixed assignments count: %d", len(fixed_assignments))
+
+    logger.info("Preparing requests")
 
     #day off request
     requests = []
@@ -122,11 +139,13 @@ if __name__=="__main__":
         req = formatter.get_employee_requests(ee, day, shift)
         requests.append(req)
 
-  
-    #TODO:call add_assigmnet_request
+    logger.info("Requests count: %d", len(requests))
+
     add_assignments_requests(model, work,fixed_assignments, requests,
                              obj_bool_vars, obj_bool_coeffs)
-    
+    logger.info("Objective bool terms: %d", len(obj_bool_vars))
+    logger.info("Objective int terms: %d", len(obj_int_vars))
+
 
     # Objective
     model.minimize(
@@ -134,12 +153,15 @@ if __name__=="__main__":
         + sum(obj_int_vars[i] * obj_int_coeffs[i] for i in range(len(obj_int_vars)))
     )
 
+    logger.info("Solving model")
     # Solve the model.
     solver = cp_model.CpSolver()
     # if params:
     #     solver.parameters.parse_text_format(params)
     solution_printer = cp_model.ObjectiveSolutionPrinter()
     status = solver.solve(model, solution_printer)
+    
+    logger.info("Solver finished with status: %s", solver.StatusName(status))
 
     if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
         csv_path = os.path.join(output_path, "schedule.csv")
@@ -162,24 +184,27 @@ if __name__=="__main__":
             schedule = ""
             for d in days:
                 schedule += get_assigned_shift_name(solver, work, e, d, shifts) + " "
-            print(f"worker {e}: {schedule}")
-        print(f"\nSchedule CSV written to {csv_path}")
-        print()
-        print("Penalties:")
+            logger.info(f"worker {e}: {schedule}")
+        logger.info("Schedule CSV written to %s", csv_path)
+
+        logger.info("Penalties:")
         for i, var in enumerate(obj_bool_vars):
             if solver.boolean_value(var):
                 penalty = obj_bool_coeffs[i]
                 if penalty > 0:
-                    print(f"  {var.name} violated, penalty={penalty}")
+                    logger.info("  %s violated, penalty=%s", var.name, penalty)
                 else:
-                    print(f"  {var.name} fulfilled, gain={-penalty}")
+                    logger.info("  %s fulfilled, gain=%s", var.name, -penalty)
 
         for i, var in enumerate(obj_int_vars):
             if solver.value(var) > 0:
-                print(
-                    f"  {var.name} violated by {solver.value(var)}, linear"
-                    f" penalty={obj_int_coeffs[i]}"
+                logger.info(
+                    "  %s violated by %s, linear penalty=%s",
+                    var.name,
+                    solver.value(var),
+                    obj_int_coeffs[i],
                 )
+    else:
+        logger.warning("No feasible solution found")
 
-    print()
-    print(solver.response_stats())
+    logger.info("Solver response stats:\n%s", solver.response_stats())
