@@ -4,6 +4,7 @@ from absl import flags
 from ortools.sat.python import cp_model
 from formatter import formatter
 import numpy as np
+import csv
 
 import sys
 
@@ -41,6 +42,7 @@ employees_assignment_requests = [
 #TODO: finish function
 def add_assignments_requests(
         model: cp_model.CpModel,
+        work,
         fixed_assignments: list,
         requests: list,
         obj_bool_vars: list[cp_model.BoolVarT],
@@ -53,9 +55,16 @@ def add_assignments_requests(
         obj_bool_vars.append(work[e, s, d])
         obj_bool_coeffs.append(w)
 
+
+def get_assigned_shift_name(solver, work, employee, day, shifts):
+    for s, shift_name in enumerate(shifts):
+        if solver.boolean_value(work[employee, s, day]):
+            return shift_name
+    return ""
+
 if __name__=="__main__":
-    num_days = len(days)
-    num_employees = len(employees)
+    # num_days = len(days)
+    # num_employees = len(employees)
     num_shifts = len(shifts)
 
     model = cp_model.CpModel()
@@ -80,7 +89,7 @@ if __name__=="__main__":
             model.add_exactly_one(work[e, s, d] for s in range(num_shifts))
 
     #Cover constraints:
-    for s in range(num_shifts):
+    for s in range(num_shifts-1): #need to not take R into account
         for d in days:
             assigned = [work[e, s, d] for e in employees]
             model.add(sum(assigned) >= min_ee)
@@ -113,7 +122,7 @@ if __name__=="__main__":
 
   
     #TODO:call add_assigmnet_request
-    add_assignments_requests(model, fixed_assignments, requests,
+    add_assignments_requests(model, work,fixed_assignments, requests,
                              obj_bool_vars, obj_bool_coeffs)
     
 
@@ -131,18 +140,28 @@ if __name__=="__main__":
     status = solver.solve(model, solution_printer)
 
     if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
+        csv_path = "schedule.csv"
+        with open(csv_path, "w", newline="") as csv_file:
+            writer = csv.writer(csv_file)
+            writer.writerow(["employee"] + [f"day_{d}" for d in days])
+
+            for e in employees:
+                row = [e]
+                for d in days:
+                    row.append(get_assigned_shift_name(solver, work, e, d, shifts))
+                writer.writerow(row)
+
         print()
         # header = "          "
         # for w in range(num_weeks):
         #     header += "M T W T F S S "
         # print(header)
-        for e in range(num_employees):
+        for e in employees:
             schedule = ""
-            for d in range(num_days):
-                for s in range(num_shifts):
-                    if solver.boolean_value(work[e, s, d]):
-                        schedule += shifts[s] + " "
+            for d in days:
+                schedule += get_assigned_shift_name(solver, work, e, d, shifts) + " "
             print(f"worker {e}: {schedule}")
+        print(f"\nSchedule CSV written to {csv_path}")
         print()
         print("Penalties:")
         for i, var in enumerate(obj_bool_vars):
@@ -162,4 +181,3 @@ if __name__=="__main__":
 
     print()
     print(solver.response_stats())
-
