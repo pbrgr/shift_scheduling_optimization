@@ -5,6 +5,8 @@ from ortools.sat.python import cp_model
 from formatter import formatter
 import numpy as np
 
+import sys
+
 
 employees = np.arange(1, 31)
 days = np.arange(1, 32) # e.g. for march
@@ -75,14 +77,14 @@ if __name__=="__main__":
     # for each ee only one shift per day
     for e in employees:
         for d in days:
-            model.add_exactly_one(work[e, s, d] for s in shifts)
+            model.add_exactly_one(work[e, s, d] for s in range(num_shifts))
 
     #Cover constraints:
     for s in range(num_shifts):
         for d in days:
             assigned = [work[e, s, d] for e in employees]
-            model.add(sum(assigned>= min_ee))
-            model.add(sum(assigned<= max_ee))
+            model.add(sum(assigned) >= min_ee)
+            model.add(sum(assigned) <= max_ee)
 
 
     #days off assignment:
@@ -113,3 +115,51 @@ if __name__=="__main__":
     #TODO:call add_assigmnet_request
     add_assignments_requests(model, fixed_assignments, requests,
                              obj_bool_vars, obj_bool_coeffs)
+    
+
+    # Objective
+    model.minimize(
+        sum(obj_bool_vars[i] * obj_bool_coeffs[i] for i in range(len(obj_bool_vars)))
+        + sum(obj_int_vars[i] * obj_int_coeffs[i] for i in range(len(obj_int_vars)))
+    )
+
+    # Solve the model.
+    solver = cp_model.CpSolver()
+    # if params:
+    #     solver.parameters.parse_text_format(params)
+    solution_printer = cp_model.ObjectiveSolutionPrinter()
+    status = solver.solve(model, solution_printer)
+
+    if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
+        print()
+        # header = "          "
+        # for w in range(num_weeks):
+        #     header += "M T W T F S S "
+        # print(header)
+        for e in range(num_employees):
+            schedule = ""
+            for d in range(num_days):
+                for s in range(num_shifts):
+                    if solver.boolean_value(work[e, s, d]):
+                        schedule += shifts[s] + " "
+            print(f"worker {e}: {schedule}")
+        print()
+        print("Penalties:")
+        for i, var in enumerate(obj_bool_vars):
+            if solver.boolean_value(var):
+                penalty = obj_bool_coeffs[i]
+                if penalty > 0:
+                    print(f"  {var.name} violated, penalty={penalty}")
+                else:
+                    print(f"  {var.name} fulfilled, gain={-penalty}")
+
+        for i, var in enumerate(obj_int_vars):
+            if solver.value(var) > 0:
+                print(
+                    f"  {var.name} violated by {solver.value(var)}, linear"
+                    f" penalty={obj_int_coeffs[i]}"
+                )
+
+    print()
+    print(solver.response_stats())
+
