@@ -5,11 +5,11 @@ import sys
 
 def setup_logging(base_output_path: str) -> logging.Logger:
     logs_dir = os.path.join(base_output_path, "logs")
-    os.makedirs(logs_dir)
+    os.makedirs(logs_dir, exist_ok=True)
    # logs_dir.mkdir(parents=True, exist_ok=True)
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    log_file = logs_dir / f"run_{timestamp}.log"
+    log_file = os.path.join(logs_dir, f"run_{timestamp}.log")
 
     logger = logging.getLogger("shift_scheduler")
     logger.setLevel(logging.INFO)
