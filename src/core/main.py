@@ -10,6 +10,9 @@ employees = np.arange(1, 31)
 days = np.arange(1, 32) # e.g. for march
 shifts = ["1N", "2N", "3N", "R"]
 
+min_ee = 3 #min ee per shift
+max_ee = 5
+
 weight_shift_request = -2 #neg means that the requests always need to be formulated in a positive way
 #so that the ee wants that specific shift
 
@@ -58,17 +61,29 @@ if __name__=="__main__":
 
     # create work variable with domain {0, 1}
     work = {}
-    for e in num_employees:
-        for s in num_shifts:
-            for d in range(num_days):
+    for e in employees:
+        for s in range(num_shifts):
+            for d in days:
                 work[e, s, d] = model.new_bool_var(f"work{e}_{s}_{d}")
 
-    #TODO: add objectives to min or max
+    # Linear terms of the objective in a minimization context.
+    obj_int_vars: list[cp_model.IntVar] = []
+    obj_int_coeffs: list[int] = []
+    obj_bool_vars: list[cp_model.BoolVarT] = []
+    obj_bool_coeffs: list[int] = []
 
     # for each ee only one shift per day
     for e in employees:
         for d in days:
             model.add_exactly_one(work[e, s, d] for s in shifts)
+
+    #Cover constraints:
+    for s in range(num_shifts):
+        for d in days:
+            assigned = [work[e, s, d] for e in employees]
+            model.add(sum(assigned>= min_ee))
+            model.add(sum(assigned<= max_ee))
+
 
     #days off assignment:
     fixed_assignments = []
@@ -76,8 +91,11 @@ if __name__=="__main__":
         fa = formatter.get_fixed_assignment(ee, day, "R")
         fixed_assignments.append(fa)
 
-    #TODO: add other logic for assignment that need to be honored
+    #add other logic for assignment that need to be honored
     #where they append on to fixed_assignments
+    for ee, day, shift in employees_fixed_assignment:
+        fa = formatter.get_fixed_assignment(ee, day, shift)
+        fixed_assignments.append(fa)
 
 
     #day off request
@@ -86,8 +104,12 @@ if __name__=="__main__":
         req = formatter.get_employee_requests(ee, day, "R")
         requests.append(req)
 
-    #TODO: add other logic for requested shifts that are not days off
-
+    #add other logic for requested shifts that are not days off
+    for ee, day, shift in employees_assignment_requests:
+        req = formatter.get_employee_requests(ee, day, shift)
+        requests.append(req)
 
   
     #TODO:call add_assigmnet_request
+    add_assignments_requests(model, fixed_assignments, requests,
+                             obj_bool_vars, obj_bool_coeffs)
