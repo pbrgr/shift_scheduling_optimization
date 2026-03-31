@@ -184,6 +184,9 @@ if __name__=="__main__":
     weekend_indices = [i for i, v in enumerate(weekends) if v == 1]
     min_weekend_days_off = 5/8
     max_weekend_days_worked = int(total_weekends*min_weekend_days_off) #still need to adapt for actual amount of weekend days
+    
+    #TODO: Add min weekend days worked, so its fair
+    #min_weekend_days_worked = 
 
     for ee in range(num_employees):
         weekend_work = []
