@@ -178,20 +178,25 @@ if __name__=="__main__":
 
     logger.info("Requests count: %d", len(requests))
 
+    working_shift_indices = range(num_shifts - 1)  # exclude R
+
     total_weekends = sum(weekends)
     weekend_indices = [i for i, v in enumerate(weekends) if v == 1]
-    min_weekend_days_off = 5
-    max_weekend_days_worked = 8-5 #still need to adapt for actual amount of weekend days
+    min_weekend_days_off = 5/8
+    max_weekend_days_worked = int(total_weekends*min_weekend_days_off) #still need to adapt for actual amount of weekend days
 
     for ee in range(num_employees):
         weekend_work = []
         for d in weekend_indices:
-            for s in range(num_shifts):
-                weekend_work.append(work[ee + 1, s, d])
-        #TODO: maybe add with a weight
-        model.add(sum(weekend_work<=max_weekend_days_worked))
+            worked_that_day = model.new_bool_var(f"weekend_work_{e}_{d}")
+            model.add_max_equality(
+                worked_that_day,
+                [work[e, s, d] for s in working_shift_indices],
+            )
+            weekend_work.append(worked_that_day)
 
-    sys.exit()
+        #TODO: maybe add with a weight
+        model.add(sum(weekend_work)<=max_weekend_days_worked)
 
 
     add_assignments_requests(model, work,fixed_assignments, requests,
