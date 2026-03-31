@@ -84,7 +84,7 @@ def get_assigned_shift_name(solver, work, employee, day, shifts):
 if __name__=="__main__":
     logger = setup_logging(output_path)
     num_days = len(days)
-    # num_employees = len(employees)
+    num_employees = len(employees)
     num_shifts = len(shifts)
 
     logger.info("Starting schedule generation")
@@ -177,6 +177,22 @@ if __name__=="__main__":
         requests.append(req)
 
     logger.info("Requests count: %d", len(requests))
+
+    total_weekends = sum(weekends)
+    weekend_indices = [i for i, v in enumerate(weekends) if v == 1]
+    min_weekend_days_off = 5
+    max_weekend_days_worked = 8-5 #still need to adapt for actual amount of weekend days
+
+    for ee in range(num_employees):
+        weekend_work = []
+        for d in weekend_indices:
+            for s in range(num_shifts):
+                weekend_work.append(work[ee + 1, s, d])
+        #TODO: maybe add with a weight
+        model.add(sum(weekend_work<=max_weekend_days_worked))
+
+    sys.exit()
+
 
     add_assignments_requests(model, work,fixed_assignments, requests,
                              obj_bool_vars, obj_bool_coeffs)
