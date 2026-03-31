@@ -13,7 +13,14 @@ import sys
 output_path = 'output'
 
 employees = np.arange(1, 31)
-days = np.arange(1, 32) # e.g. for march
+days = ["28.02",
+ "01.03","02.03","03.03","04.03","05.03","06.03","07.03","08.03","09.03","10.03",
+ "11.03","12.03","13.03","14.03","15.03","16.03","17.03","18.03","19.03","20.03",
+ "21.03","22.03","23.03","24.03","25.03","26.03","27.03","28.03","29.03","30.03","31.03"]
+weekends = [1,
+ 1,0,0,0,0,0,1,1,0,0,
+ 0,0,0,1,1,0,0,0,0,0,
+ 1,1,0,0,0,0,0,1,1,0,0]
 shifts = ["1N", "2N", "3N", "R"]
 
 min_ee = 3 #min ee per shift
@@ -76,7 +83,7 @@ def get_assigned_shift_name(solver, work, employee, day, shifts):
 
 if __name__=="__main__":
     logger = setup_logging(output_path)
-    # num_days = len(days)
+    num_days = len(days)
     # num_employees = len(employees)
     num_shifts = len(shifts)
 
@@ -96,7 +103,7 @@ if __name__=="__main__":
     work = {}
     for e in employees:
         for s in range(num_shifts):
-            for d in days:
+            for d in range(num_days):
                 work[e, s, d] = model.new_bool_var(f"work{e}_{s}_{d}")
 
     # Linear terms of the objective in a minimization context.
@@ -108,13 +115,13 @@ if __name__=="__main__":
     # for each ee only one shift per day
     logger.info("Adding one-shift-per-day constraints")
     for e in employees:
-        for d in days:
+        for d in range(num_days):
             model.add_exactly_one(work[e, s, d] for s in range(num_shifts))
 
     #Cover constraints:
     logger.info("Adding coverage constraints")
     for s in range(num_shifts-1): #need to not take R into account
-        for d in days:
+        for d in range(num_days):
             assigned = [work[e, s, d] for e in employees]
             model.add(sum(assigned) >= min_ee)
             model.add(sum(assigned) <= max_ee)
@@ -124,7 +131,7 @@ if __name__=="__main__":
         prev_shift, next_shift, reward = formatter.reward_transitions(prev_shift,next_shift,reward)
 
         for e in employees:
-            for d in days[:-1]:
+            for d in range(num_days-1):
                 t = [
                     ~work[e, prev_shift, d],
                     ~work[e, next_shift, d + 1],
@@ -201,7 +208,7 @@ if __name__=="__main__":
 
             for e in employees:
                 row = [e]
-                for d in days:
+                for d in range(num_days):
                     row.append(get_assigned_shift_name(solver, work, e, d, shifts))
                 writer.writerow(row)
 
@@ -212,7 +219,7 @@ if __name__=="__main__":
         # print(header)
         for e in employees:
             schedule = ""
-            for d in days:
+            for d in range(num_days):
                 schedule += get_assigned_shift_name(solver, work, e, d, shifts) + " "
             logger.info(f"worker {e}: {schedule}")
         logger.info("Schedule CSV written to %s", csv_path)
