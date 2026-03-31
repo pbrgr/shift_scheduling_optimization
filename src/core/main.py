@@ -30,22 +30,22 @@ weight_shift_request = -2 #neg means that the requests always need to be formula
 #so that the ee wants that specific shift
 
 employees_dayoff_assignment = [
-    (4, 2),
-    (9, 15)
+    (4, "01.03"),
+    (9, "16.03")
 ]
 
 employees_fixed_assignment = [
-    (4, 5, "1N")
+    (4, "06.03", "1N")
 ]
 
 employees_dayoff_requests = [
-    (1, 2),
-    (5, 15),
-    (7, 15)
+    (1, "01.03"),
+    (5, "16.03"),
+    (7, "16.03")
 ]
 
 employees_assignment_requests = [
-    (1, 3, "2N")
+    (1, "02.03", "2N")
 ]
 
 #transitions:
@@ -95,7 +95,7 @@ if __name__=="__main__":
     logger.info("Max employees per shift: %d", max_ee)
 
     model = cp_model.CpModel()
-    formatter = formatter(shifts=shifts, weight_requests=weight_shift_request)
+    formatter = formatter(shifts=shifts, days= days, weight_requests=weight_shift_request)
 
     logger.info("Creating decision variables")
 

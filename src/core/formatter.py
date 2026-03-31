@@ -3,9 +3,10 @@ from ortools.sat.python import cp_model
 
 
 class formatter:
-    def __init__(self, shifts, weight_requests):
+    def __init__(self, shifts, days, weight_requests):
         self.shifts = shifts
         self.weight_requests = weight_requests
+        self.days = days
     
     def get_fixed_assignment(
         self,
@@ -14,8 +15,9 @@ class formatter:
         shift: str,
     )->tuple[int, int, int]:
         shift_number = self.shifts.index(shift)
+        day_number = self.days.index(day)
 
-        return employee, shift_number, day
+        return employee, shift_number, day_number
 
     def get_employee_requests(
         self,
@@ -24,8 +26,10 @@ class formatter:
         shift: str
     )->tuple[int, int, int, int]:
         shift_number = self.shifts.index(shift)
+        day_number = self.days.index(day)
 
-        return employee, shift_number, day, self.weight_requests
+
+        return employee, shift_number, day_number, self.weight_requests
     
     #TODO: add logic to add fixed assignments for specific days
 
