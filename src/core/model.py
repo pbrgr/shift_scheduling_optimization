@@ -195,15 +195,7 @@ def add_workload_fairness(sm: ScheduleModel, config: ScheduleConfig) -> None:
 
 
 def build_model(config: ScheduleConfig) -> ScheduleModel:
-    conflicts = config.conflicting_assignments()
-    if conflicts:
-        raise ValueError(
-            "conflicting fixed assignments, the model would be infeasible: "
-            + ", ".join(
-                f"employee {e} on {day} demanded as {'/'.join(shifts)}"
-                for e, day, shifts in conflicts
-            )
-        )
+    config.validate()
 
     model = cp_model.CpModel()
     fmt = formatter(

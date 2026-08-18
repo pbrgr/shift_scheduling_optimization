@@ -77,9 +77,24 @@ from src.infrastructure.config import WEDNESDAY
 recurring_assignments=[(1, WEDNESDAY, "R")]
 ```
 
-Hard rules that contradict each other on the same day are rejected with an
-explicit error before solving, since the solver would only report a bare
-`INFEASIBLE`.
+The configuration is validated before the model is built, and every problem is
+reported at once rather than one per run:
+
+```
+ValueError: invalid schedule configuration:
+  - min_ee 6 is above max_ee 3
+  - fixed assignment for unknown employee 99
+  - fixed assignment for employee 99 on unknown day '15.07'
+```
+
+That covers unknown employees, days and shifts, duplicates, coverage bounds the
+wrong way round, weekdays outside the week, and hard rules contradicting each
+other on the same day — cases the solver would otherwise either crash on with a
+bare `KeyError` or report as an unexplained `INFEASIBLE`.
+
+The rest shift is named via `rest_shift` rather than taken from the end of
+`shifts`, so reordering the list cannot silently turn a working shift into the
+one that means "not working".
 
 To try a variant without touching the defaults:
 

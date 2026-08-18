@@ -57,6 +57,10 @@ class ScheduleConfig:
     recurring_assignments: list[tuple[int, int, str]] = field(default_factory=list)
     recurring_requests: list[tuple[int, int, str]] = field(default_factory=list)
 
+    #the shift that means "not working". named rather than positional, so
+    #reordering `shifts` cannot silently turn a working shift into the rest one
+    rest_shift: str = "R"
+
     #share of the weekend days an employee may work at most
     max_weekend_work_ratio: float = 5 / 8
 
@@ -81,9 +85,9 @@ class ScheduleConfig:
 
     @property
     def all_fixed_assignments(self) -> list[tuple[int, str, str]]:
-        #days off are just a fixed assignment to the last shift
+        #days off are just a fixed assignment to the rest shift
         return (
-            [(e, day, self.shifts[-1]) for e, day in self.dayoff_assignments]
+            [(e, day, self.rest_shift) for e, day in self.dayoff_assignments]
             + list(self.fixed_assignments)
             + self._expand(self.recurring_assignments)
         )
@@ -91,7 +95,7 @@ class ScheduleConfig:
     @property
     def all_requests(self) -> list[tuple[int, str, str]]:
         return (
-            [(e, day, self.shifts[-1]) for e, day in self.dayoff_requests]
+            [(e, day, self.rest_shift) for e, day in self.dayoff_requests]
             + list(self.assignment_requests)
             + self._expand(self.recurring_requests)
         )
@@ -109,6 +113,82 @@ class ScheduleConfig:
             if len(shifts) > 1
         ]
 
+    def _duplicates(self, values) -> list:
+        seen, duplicates = set(), []
+        for v in values:
+            if v in seen and v not in duplicates:
+                duplicates.append(v)
+            seen.add(v)
+        return duplicates
+
+    def problems(self) -> list[str]:
+        #collected rather than raised one by one, so a broken config can be
+        #fixed in one go instead of one message per run
+        found = []
+
+        if not self.days:
+            found.append("days is empty")
+        if not self.employees:
+            found.append("employees is empty")
+        if self.rest_shift not in self.shifts:
+            found.append(
+                f"rest_shift {self.rest_shift!r} is not one of shifts {self.shifts}"
+            )
+        elif len(self.shifts) < 2:
+            found.append("shifts needs at least one working shift besides the rest shift")
+
+        for label, values in (("days", self.days), ("employees", self.employees),
+                              ("shifts", self.shifts)):
+            for duplicate in self._duplicates(values):
+                found.append(f"{label} contains {duplicate!r} more than once")
+
+        if self.min_ee > self.max_ee:
+            found.append(f"min_ee {self.min_ee} is above max_ee {self.max_ee}")
+        if self.min_ee < 0:
+            found.append(f"min_ee {self.min_ee} is negative")
+        if self.max_solve_seconds <= 0:
+            found.append(f"max_solve_seconds {self.max_solve_seconds} is not positive")
+
+        known_employees, known_days = set(self.employees), set(self.days)
+        known_shifts = set(self.shifts)
+
+        for label, rules in (("fixed assignment", self.all_fixed_assignments),
+                             ("request", self.all_requests)):
+            for employee, day, shift in rules:
+                if employee not in known_employees:
+                    found.append(f"{label} for unknown employee {employee}")
+                if day not in known_days:
+                    found.append(f"{label} for employee {employee} on unknown day {day!r}")
+                if shift not in known_shifts:
+                    found.append(f"{label} for employee {employee} on {day} "
+                                 f"asks for unknown shift {shift!r}")
+
+        for label, rules in (("recurring assignment", self.recurring_assignments),
+                             ("recurring request", self.recurring_requests)):
+            for employee, weekday, _ in rules:
+                if not 0 <= weekday <= 6:
+                    found.append(f"{label} for employee {employee} has weekday "
+                                 f"{weekday}, expected 0 (monday) to 6 (sunday)")
+
+        for prev_shift, next_shift, _ in self.transitions:
+            for shift in (prev_shift, next_shift):
+                if shift not in known_shifts:
+                    found.append(f"transition refers to unknown shift {shift!r}")
+
+        found += [
+            f"employee {employee} on {day} demanded as {'/'.join(shifts)}"
+            for employee, day, shifts in self.conflicting_assignments()
+        ]
+
+        return found
+
+    def validate(self) -> None:
+        found = self.problems()
+        if found:
+            raise ValueError(
+                "invalid schedule configuration:\n  - " + "\n  - ".join(found)
+            )
+
     @property
     def num_days(self) -> int:
         return len(self.days)
@@ -122,8 +202,14 @@ class ScheduleConfig:
         return len(self.shifts)
 
     @property
-    def working_shift_indices(self) -> range:
-        return range(self.num_shifts - 1) #exclude R
+    def rest_shift_index(self) -> int:
+        return self.shifts.index(self.rest_shift)
+
+    @property
+    def working_shift_indices(self) -> tuple[int, ...]:
+        return tuple(
+            s for s in range(self.num_shifts) if s != self.rest_shift_index
+        )
 
     @property
     def weekends(self) -> list[int]:
