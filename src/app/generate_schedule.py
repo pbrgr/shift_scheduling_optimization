@@ -59,6 +59,7 @@ def solve(sm: ScheduleModel, config: ScheduleConfig) -> tuple[cp_model.CpSolver,
     solver = cp_model.CpSolver()
     #the transition rewards make proving optimality expensive, so cap the run
     solver.parameters.max_time_in_seconds = config.max_solve_seconds
+    solver.parameters.symmetry_level = config.symmetry_level
     status = solver.solve(sm.model, cp_model.ObjectiveSolutionPrinter())
 
     return solver, status

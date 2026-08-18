@@ -60,6 +60,11 @@ class ScheduleConfig:
     #share of the weekend days an employee may work at most
     max_weekend_work_ratio: float = 5 / 8
 
+    #CP-SAT detects and breaks symmetries itself at its default of 2. Measured
+    #over 3 runs each on DEFAULT_CONFIG, that costs more search time than it
+    #saves here: level 2 landed at a gap of 38-43, levels 0 and 1 at 28-32.
+    symmetry_level: int = 1
+
     def days_on_weekday(self, weekday: int) -> list[str]:
         return [
             day
