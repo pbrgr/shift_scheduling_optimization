@@ -18,7 +18,10 @@ python -m src.app.generate_schedule
 Run from the repository root. The result is written to `output/schedule.csv`,
 the run log to `output/logs/run_<timestamp>.log`.
 
-Tests run against a small config that solves in milliseconds:
+Tests run against small configs that solve in milliseconds. Besides the
+constraints they recompute the objective from the finished schedule and compare
+it with what the solver reports, which catches objective terms that do not
+correspond to the plan they claim to score:
 
 ```bash
 pip install -r requirements-dev.txt
