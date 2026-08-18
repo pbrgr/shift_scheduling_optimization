@@ -1,7 +1,3 @@
-import numpy as np
-from ortools.sat.python import cp_model
-
-
 class formatter:
     def __init__(self, shifts, days, weight_requests):
         self.shifts = shifts

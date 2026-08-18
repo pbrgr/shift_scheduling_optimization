@@ -1,7 +1,85 @@
 # shift_scheduling_optimization
-SAT CP Solver
+
+Shift scheduler built on the OR-Tools CP-SAT solver. Assigns employees to the
+shifts `1N`, `2N`, `3N` and `R` (= day off) over a given period, honouring
+coverage requirements and fixed assignments while trading off shift requests,
+shift transitions and fairness.
+
+## Running
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+python -m src.app.generate_schedule
+```
+
+Run from the repository root. The result is written to `output/schedule.csv`,
+the run log to `output/logs/run_<timestamp>.log`.
+
+`notebooks/check_scheduler_results.ipynb` inspects that CSV against the same
+configuration the solver used.
+
+## Layout
 
 	core/ = pure domain and algorithm
 	•	app/ = orchestration, workflows, use-cases
 	•	frontend/ = UI code later
 	•	infrastructure/ = database, file system, external APIs
+
+| Module | Contents |
+|---|---|
+| `src/core/model.py` | decision variables, constraints, objective |
+| `src/core/formatter.py` | translates days and shift names into model indices |
+| `src/app/generate_schedule.py` | the use case: build, solve, report, persist |
+| `src/infrastructure/config.py` | `ScheduleConfig` and the current `DEFAULT_CONFIG` |
+| `src/infrastructure/csv_writer.py` | schedule export |
+| `src/infrastructure/logger.py` | file and console logging |
+
+`test/core/shift_scheduling_sat.py` is the unmodified OR-Tools example this
+project started from, kept as a reference.
+
+## Configuration
+
+Everything lives in `DEFAULT_CONFIG` in `src/infrastructure/config.py`: the
+period, employees, shifts, coverage bounds, weights and the individual
+assignments and requests.
+
+Days are `"DD.MM"` strings plus a separate `year`. Weekends are **derived from
+the calendar** rather than maintained by hand, so they cannot drift from the
+dates. The fairness targets are derived too: the fair weekend share and the
+fair band of shifts per employee both follow from the period, `min_ee` and the
+number of working shifts.
+
+To try a variant without touching the defaults:
+
+```python
+from dataclasses import replace
+from src.app.generate_schedule import generate_schedule
+from src.infrastructure.config import DEFAULT_CONFIG
+
+generate_schedule(replace(DEFAULT_CONFIG, min_ee=4), output_path="output_min4")
+```
+
+## Model
+
+Hard constraints:
+
+- exactly one shift per employee and day
+- `min_ee` to `max_ee` employees per working shift and day (`R` is not covered)
+- fixed assignments and fixed days off
+- transitions with reward `0` are forbidden outright
+- at most `max_weekend_work_ratio` of the weekend days per employee
+
+Soft terms, weighted into the objective:
+
+- shift requests (`weight_shift_request`, negative — requests are rewards, so
+  they have to be phrased as something the employee wants)
+- rewarded shift transitions
+- weekend fairness: penalty per weekend day below the fair share
+- workload fairness: penalty per shift outside the fair band
+
+The transition rewards make proving optimality expensive, so the solver is
+capped at `max_solve_seconds` and normally returns `FEASIBLE` with a small
+remaining gap rather than `OPTIMAL`.
