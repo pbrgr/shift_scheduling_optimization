@@ -18,6 +18,13 @@ python -m src.app.generate_schedule
 Run from the repository root. The result is written to `output/schedule.csv`,
 the run log to `output/logs/run_<timestamp>.log`.
 
+Tests run against a small config that solves in milliseconds:
+
+```bash
+pip install -r requirements-dev.txt
+pytest
+```
+
 `notebooks/check_scheduler_results.ipynb` inspects that CSV against the same
 configuration the solver used.
 
