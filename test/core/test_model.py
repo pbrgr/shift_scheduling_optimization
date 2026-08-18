@@ -1,5 +1,9 @@
 from dataclasses import replace
 
+import pytest
+
+from src.core.model import build_model
+from src.infrastructure.config import WEDNESDAY
 from test.conftest import with_transitions
 
 
@@ -123,3 +127,51 @@ def test_workload_fairness_narrows_the_spread(tiny_config, solve):
         return max(totals) - min(totals)
 
     assert spread(weighted) <= spread(unweighted)
+
+
+def test_recurring_assignment_applies_to_every_matching_weekday(tiny_config, solve):
+    #the case the old TODO described: away on education every wednesday
+    config = replace(tiny_config, recurring_assignments=[(2, WEDNESDAY, "R")])
+    _, _, schedule = solve(config)
+
+    wednesdays = config.days_on_weekday(WEDNESDAY)
+    assert wednesdays == ["04.03"]
+    for day in wednesdays:
+        assert schedule[2][config.days.index(day)] == "R"
+
+
+def test_recurring_assignment_leaves_other_days_free(tiny_config, solve):
+    config = replace(tiny_config, recurring_assignments=[(2, WEDNESDAY, "R")])
+    _, _, schedule = solve(config)
+
+    #coverage still has to be met by the others on that day
+    d = config.days.index("04.03")
+    assert sum(1 for days in schedule.values() if days[d] != "R") >= config.min_ee
+
+
+def test_recurring_request_is_soft(tiny_config, solve):
+    config = replace(tiny_config, recurring_requests=[(2, WEDNESDAY, "R")])
+    sm, _, _ = solve(config)
+
+    assert sm.obj_bool_coeffs == [config.weight_shift_request]
+
+
+def test_conflicting_fixed_assignments_are_rejected(tiny_config):
+    config = replace(
+        tiny_config,
+        fixed_assignments=[(2, "04.03", "1N")],
+        recurring_assignments=[(2, WEDNESDAY, "R")],
+    )
+
+    with pytest.raises(ValueError, match="employee 2 on 04.03"):
+        build_model(config)
+
+
+def test_matching_fixed_assignments_are_not_a_conflict(tiny_config):
+    config = replace(
+        tiny_config,
+        fixed_assignments=[(2, "04.03", "R")],
+        recurring_assignments=[(2, WEDNESDAY, "R")],
+    )
+
+    assert config.conflicting_assignments() == []

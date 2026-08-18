@@ -1,5 +1,7 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import date
+
+MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY = range(7)
 
 
 def to_dates(days: list[str], year: int) -> list[date]:
@@ -50,8 +52,57 @@ class ScheduleConfig:
     #(previous_shift, next_shift, reward), 0 means forbidden
     transitions: list[tuple[str, str, int]]
 
+    #rules that repeat every week, e.g. (1, WEDNESDAY, "R") for an employee
+    #who is away on education every wednesday
+    recurring_assignments: list[tuple[int, int, str]] = field(default_factory=list)
+    recurring_requests: list[tuple[int, int, str]] = field(default_factory=list)
+
     #share of the weekend days an employee may work at most
     max_weekend_work_ratio: float = 5 / 8
+
+    def days_on_weekday(self, weekday: int) -> list[str]:
+        return [
+            day
+            for day, d in zip(self.days, to_dates(self.days, self.year))
+            if d.weekday() == weekday
+        ]
+
+    def _expand(self, rules) -> list[tuple[int, str, str]]:
+        return [
+            (employee, day, shift)
+            for employee, weekday, shift in rules
+            for day in self.days_on_weekday(weekday)
+        ]
+
+    @property
+    def all_fixed_assignments(self) -> list[tuple[int, str, str]]:
+        #days off are just a fixed assignment to the last shift
+        return (
+            [(e, day, self.shifts[-1]) for e, day in self.dayoff_assignments]
+            + list(self.fixed_assignments)
+            + self._expand(self.recurring_assignments)
+        )
+
+    @property
+    def all_requests(self) -> list[tuple[int, str, str]]:
+        return (
+            [(e, day, self.shifts[-1]) for e, day in self.dayoff_requests]
+            + list(self.assignment_requests)
+            + self._expand(self.recurring_requests)
+        )
+
+    def conflicting_assignments(self) -> list[tuple[int, str, tuple[str, ...]]]:
+        #two hard rules demanding different shifts on the same day cannot both
+        #hold, and the solver would only report a bare INFEASIBLE
+        by_day: dict[tuple[int, str], set[str]] = {}
+        for employee, day, shift in self.all_fixed_assignments:
+            by_day.setdefault((employee, day), set()).add(shift)
+
+        return [
+            (employee, day, tuple(sorted(shifts)))
+            for (employee, day), shifts in by_day.items()
+            if len(shifts) > 1
+        ]
 
     @property
     def num_days(self) -> int:

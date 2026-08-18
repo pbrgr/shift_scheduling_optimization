@@ -59,6 +59,28 @@ dates. The fairness targets are derived too: the fair weekend share and the
 fair band of shifts per employee both follow from the period, `min_ee` and the
 number of working shifts.
 
+Assignments come in four flavours, each either hard or soft:
+
+| Field | Effect |
+|---|---|
+| `dayoff_assignments` | hard, `(employee, day)` |
+| `fixed_assignments` | hard, `(employee, day, shift)` |
+| `recurring_assignments` | hard, `(employee, weekday, shift)`, every matching week |
+| `dayoff_requests` / `assignment_requests` / `recurring_requests` | the soft counterparts, weighted by `weight_shift_request` |
+
+Recurring rules cover the standing cases, e.g. an employee who is away on
+education every wednesday:
+
+```python
+from src.infrastructure.config import WEDNESDAY
+
+recurring_assignments=[(1, WEDNESDAY, "R")]
+```
+
+Hard rules that contradict each other on the same day are rejected with an
+explicit error before solving, since the solver would only report a bare
+`INFEASIBLE`.
+
 To try a variant without touching the defaults:
 
 ```python

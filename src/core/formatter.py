@@ -26,8 +26,6 @@ class formatter:
 
 
         return employee, shift_number, day_number, self.weight_requests
-    
-    #TODO: add logic to add fixed assignments for specific days
 
     def reward_transitions(
             self,
@@ -39,4 +37,3 @@ class formatter:
         next_shift_number = self.shifts.index(next_shift)
 
         return prev_shift_number, next_shift_number, reward
-#e.g. ee 1 every wednesday needs to have the day off for education

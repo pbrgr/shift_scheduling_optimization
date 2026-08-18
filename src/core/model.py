@@ -128,21 +128,16 @@ def add_assignments_and_requests(
         config: ScheduleConfig,
         fmt: formatter,
 ) -> None:
-    #days off are just a fixed assignment to R
+    #one-off days off, fixed shifts and weekly recurring rules all end up as
+    #the same (employee, day, shift) triples
     hard = [
-        fmt.get_fixed_assignment(ee, day, "R")
-        for ee, day in config.dayoff_assignments
-    ] + [
         fmt.get_fixed_assignment(ee, day, shift)
-        for ee, day, shift in config.fixed_assignments
+        for ee, day, shift in config.all_fixed_assignments
     ]
 
     soft = [
-        fmt.get_employee_requests(ee, day, "R")
-        for ee, day in config.dayoff_requests
-    ] + [
         fmt.get_employee_requests(ee, day, shift)
-        for ee, day, shift in config.assignment_requests
+        for ee, day, shift in config.all_requests
     ]
 
     for e, s, d in hard:
@@ -200,6 +195,16 @@ def add_workload_fairness(sm: ScheduleModel, config: ScheduleConfig) -> None:
 
 
 def build_model(config: ScheduleConfig) -> ScheduleModel:
+    conflicts = config.conflicting_assignments()
+    if conflicts:
+        raise ValueError(
+            "conflicting fixed assignments, the model would be infeasible: "
+            + ", ".join(
+                f"employee {e} on {day} demanded as {'/'.join(shifts)}"
+                for e, day, shifts in conflicts
+            )
+        )
+
     model = cp_model.CpModel()
     fmt = formatter(
         shifts=config.shifts,
