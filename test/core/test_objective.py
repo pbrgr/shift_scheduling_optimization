@@ -39,6 +39,9 @@ def objective_config() -> ScheduleConfig:
         dayoff_requests=[(3, "05.03"), (4, "06.03")],
         assignment_requests=[(5, "07.03", "2N")],
         transitions=[("2N", "1N", -4), ("1N", "3N", -4), ("3N", "1N", 0)],
+        #a cap of 3/8 of the 4 weekend days would be 1, below what coverage
+        #needs from 8 employees; 5/8 keeps the fixture feasible
+        max_weekend_work_ratio=5 / 8,
     )
 
 
@@ -61,19 +64,23 @@ def recomputed_objective(schedule: dict, config: ScheduleConfig) -> int:
                 if days[d] == prev_shift and days[d + 1] == next_shift
             )
 
-    #weekend fairness penalises days below the fair share
+    #weekend fairness penalises days below the fair share; a compensation
+    #day counts as free just like the rest shift
     for days in schedule.values():
         worked = sum(
-            1 for d in config.weekend_indices if days[d] != config.rest_shift
+            1
+            for d in config.weekend_indices
+            if days[d] not in config.free_shifts
         )
         total += config.weight_weekend_fairness * max(
             0, config.fair_weekend_days - worked
         )
 
-    #workload fairness penalises both directions out of the fair band
+    #workload fairness penalises both directions out of the fair band,
+    #weighted: a composite day fills several coverage slots
     fair_min, fair_max = config.fair_shifts
     for days in schedule.values():
-        worked = sum(1 for shift in days if shift != config.rest_shift)
+        worked = sum(config.shift_load(shift) for shift in days)
         total += config.weight_workload_fairness * (
             max(0, fair_min - worked) + max(0, worked - fair_max)
         )
@@ -143,3 +150,21 @@ def test_rewards_cannot_be_collected_without_the_schedule_earning_them(
     )
 
     assert solver.objective_value == -4 * occurrences
+
+
+def test_objective_matches_with_composite_and_compensation_shifts(
+    objective_config, solve
+):
+    #the KNZ shift system: 1N3N works two shifts in one day, Komp is a free
+    #day allowed only after a night duty. the invariant must hold there too
+    config = replace(
+        objective_config,
+        shifts=["1N", "2N", "3N", "1N3N", "Komp", "R"],
+        compensation_shift="Komp",
+        compensation_follows=("3N", "1N3N"),
+        composite_shifts={"1N3N": ("1N", "3N")},
+        transitions=[("2N", "1N3N", -4), ("1N3N", "Komp", -4), ("3N", "1N", 0)],
+    )
+    _, solver, schedule = solve(config)
+
+    assert recomputed_objective(schedule, config) == solver.objective_value

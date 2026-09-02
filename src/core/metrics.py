@@ -79,25 +79,26 @@ def count_transitions(schedule: Schedule, prev_shift: str, next_shift: str) -> i
 
 
 def compute_metrics(schedule: Schedule, config: ScheduleConfig) -> ScheduleMetrics:
-    rest = config.rest_shift
-    working_shifts = [config.shifts[i] for i in config.working_shift_indices]
+    free = set(config.free_shifts)
 
+    #weighted: a composite day (e.g. 1N3N) fills several coverage slots
     shifts_worked = {
-        e: sum(1 for shift in days if shift != rest)
+        e: sum(config.shift_load(shift) for shift in days)
         for e, days in schedule.items()
     }
     weekend_days_worked = {
-        e: sum(1 for d in config.weekend_indices if days[d] != rest)
+        e: sum(1 for d in config.weekend_indices if days[d] not in free)
         for e, days in schedule.items()
     }
 
     coverage = {}
-    for shift in working_shifts:
+    for atomic in config.atomic_working_shifts:
+        covering = set(config.shifts_covering(atomic))
         per_day = [
-            sum(1 for days in schedule.values() if days[d] == shift)
+            sum(1 for days in schedule.values() if days[d] in covering)
             for d in range(config.num_days)
         ]
-        coverage[shift] = (min(per_day), max(per_day))
+        coverage[atomic] = (min(per_day), max(per_day))
 
     rewarded, forbidden = {}, {}
     for prev_shift, next_shift, reward in config.transitions:
@@ -130,7 +131,7 @@ def summary_lines(metrics: ScheduleMetrics, config: ScheduleConfig) -> list[str]
     low, high = metrics.workload_spread
     outside = metrics.employees_outside_fair_band
     lines.append(
-        "Shifts per employee: %d to %d (fair band %d to %d, outside: %s)"
+        "Shift slots per employee: %d to %d (fair band %d to %d, outside: %s)"
         % (low, high, *metrics.fair_shifts, len(outside) or "none")
     )
 

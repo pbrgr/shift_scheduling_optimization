@@ -18,11 +18,14 @@ def test_rest_shift_is_found_by_name_not_by_position():
     #regression: working shifts used to be range(num_shifts - 1), so moving R
     #turned a real shift into the rest shift and produced a plausible but
     #wrong schedule without any complaint
-    config = replace(DEFAULT_CONFIG, shifts=["R", "1N", "2N", "3N"])
+    config = replace(
+        DEFAULT_CONFIG, shifts=["R", "Komp", "1N", "2N", "3N", "1N3N"]
+    )
 
     assert config.problems() == []
     assert config.rest_shift_index == 0
-    assert config.working_shift_indices == (1, 2, 3)
+    assert config.working_shift_indices == (2, 3, 4, 5)
+    assert config.atomic_working_shifts == ("1N", "2N", "3N")
 
 
 def test_unknown_rest_shift_is_rejected():
@@ -95,3 +98,21 @@ def test_build_model_refuses_an_invalid_config():
 
     with pytest.raises(ValueError, match="invalid schedule configuration"):
         build_model(config)
+
+
+def test_compensation_without_follows_is_rejected():
+    assert "compensation_follows is empty" in problems_of(
+        compensation_follows=()
+    )
+
+
+def test_composite_with_unknown_part_is_rejected():
+    assert "refers to unknown shift 'XX'" in problems_of(
+        composite_shifts={"1N3N": ("1N", "XX")}
+    )
+
+
+def test_composite_part_must_be_atomic():
+    assert "must be an atomic working shift" in problems_of(
+        composite_shifts={"1N3N": ("1N", "R")}
+    )

@@ -1,9 +1,12 @@
 # shift_scheduling_optimization
 
-Shift scheduler built on the OR-Tools CP-SAT solver. Assigns employees to the
-shifts `1N`, `2N`, `3N` and `R` (= day off) over a given period, honouring
-coverage requirements and fixed assignments while trading off shift requests,
-shift transitions and fairness.
+Shift scheduler built on the OR-Tools CP-SAT solver, modelled on the duty
+planning rules of the KAPO Thurgau emergency call centre (KNZ). Assigns
+employees to the shifts `1N` (early), `2N` (late), `3N` (night), `1N3N`
+(early and night on the same day), `Komp` (compensation after a night duty)
+and `R` (day off) over a given period, honouring coverage requirements and
+fixed assignments while trading off shift requests, the documented standard
+sequence `2N, 1N3N, Komp, R` and fairness.
 
 ## Running
 
@@ -119,11 +122,18 @@ generate_schedule(replace(DEFAULT_CONFIG, min_ee=4), output_path="output_min4")
 
 Hard constraints:
 
-- exactly one shift per employee and day
-- `min_ee` to `max_ee` employees per working shift and day (`R` is not covered)
+- exactly one shift entry per employee and day; a composite shift like `1N3N`
+  counts towards the coverage of both its parts and fills two workload slots
+- `min_ee` to `max_ee` employees per atomic working shift and day (`R` and
+  `Komp` are not covered)
+- `Komp` is only allowed right after one of `compensation_follows` (`3N`,
+  `1N3N`); on day 0 it is forbidden unless the planner fixed it, since the
+  previous month is not visible
 - fixed assignments and fixed days off
-- transitions with reward `0` are forbidden outright
-- at most `max_weekend_work_ratio` of the weekend days per employee
+- transitions with reward `0` are forbidden outright (a night part ends 06:30,
+  a morning shift starts 06:00)
+- at most `max_weekend_work_ratio` of the weekend days per employee — 3/8 per
+  the KNZ document ("5 of 8 weekend days free")
 
 Soft terms, weighted into the objective:
 

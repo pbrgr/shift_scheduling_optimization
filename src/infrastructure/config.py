@@ -61,8 +61,20 @@ class ScheduleConfig:
     #reordering `shifts` cannot silently turn a working shift into the rest one
     rest_shift: str = "R"
 
-    #share of the weekend days an employee may work at most
-    max_weekend_work_ratio: float = 5 / 8
+    #compensation day after a night duty. counts as a free day like the rest
+    #shift, but is only allowed right after one of `compensation_follows`
+    #("Komp = Kompensation Nachtdienst, folgt auf ein 3N")
+    compensation_shift: str | None = None
+    compensation_follows: tuple[str, ...] = ()
+
+    #shifts that mean working two shifts on the same day, e.g. "1N3N" is a
+    #morning and a night shift. they count towards the coverage of each part.
+    composite_shifts: dict[str, tuple[str, ...]] = field(default_factory=dict)
+
+    #share of the weekend days an employee may work at most.
+    #KAPO TG, "Ablauf/Regeln Dienstplanung KNZ" (26.11.2026), Schritt 2:
+    #5 of 8 weekend days per month are FREE, so at most 3 of 8 are worked
+    max_weekend_work_ratio: float = 3 / 8
 
     #CP-SAT detects and breaks symmetries itself at its default of 2. Measured
     #over 3 runs each on DEFAULT_CONFIG, that costs more search time than it
@@ -137,6 +149,41 @@ class ScheduleConfig:
         elif len(self.shifts) < 2:
             found.append("shifts needs at least one working shift besides the rest shift")
 
+        if self.compensation_shift is not None:
+            if self.compensation_shift not in self.shifts:
+                found.append(
+                    f"compensation_shift {self.compensation_shift!r} is not one of shifts"
+                )
+            if self.compensation_shift == self.rest_shift:
+                found.append("compensation_shift must differ from rest_shift")
+            if not self.compensation_follows:
+                found.append(
+                    "compensation_shift is set but compensation_follows is empty"
+                )
+            for shift in self.compensation_follows:
+                if shift not in self.shifts:
+                    found.append(
+                        f"compensation_follows refers to unknown shift {shift!r}"
+                    )
+        elif self.compensation_follows:
+            found.append("compensation_follows is set but compensation_shift is not")
+
+        for name, parts in self.composite_shifts.items():
+            if name not in self.shifts:
+                found.append(f"composite shift {name!r} is not one of shifts")
+            if len(parts) < 2:
+                found.append(f"composite shift {name!r} needs at least two parts")
+            for part in parts:
+                if part not in self.shifts:
+                    found.append(
+                        f"composite shift {name!r} refers to unknown shift {part!r}"
+                    )
+                elif part in self.free_shifts or part in self.composite_shifts:
+                    found.append(
+                        f"composite shift {name!r} part {part!r} must be an "
+                        "atomic working shift"
+                    )
+
         for label, values in (("days", self.days), ("employees", self.employees),
                               ("shifts", self.shifts)):
             for duplicate in self._duplicates(values):
@@ -206,9 +253,39 @@ class ScheduleConfig:
         return self.shifts.index(self.rest_shift)
 
     @property
+    def free_shifts(self) -> tuple[str, ...]:
+        #every shift name that means a free day
+        if self.compensation_shift is None:
+            return (self.rest_shift,)
+        return (self.rest_shift, self.compensation_shift)
+
+    @property
     def working_shift_indices(self) -> tuple[int, ...]:
+        #includes composite shifts: a 1N3N day is a worked day
         return tuple(
-            s for s in range(self.num_shifts) if s != self.rest_shift_index
+            s for s in range(self.num_shifts)
+            if self.shifts[s] not in self.free_shifts
+        )
+
+    @property
+    def atomic_working_shifts(self) -> tuple[str, ...]:
+        #the shifts that carry a coverage requirement of their own
+        return tuple(
+            self.shifts[s] for s in self.working_shift_indices
+            if self.shifts[s] not in self.composite_shifts
+        )
+
+    def shift_load(self, shift: str) -> int:
+        #how many coverage slots one day of this shift fills
+        if shift in self.composite_shifts:
+            return len(self.composite_shifts[shift])
+        return 0 if shift in self.free_shifts else 1
+
+    def shifts_covering(self, atomic: str) -> tuple[str, ...]:
+        #the atomic shift itself plus every composite that contains it
+        return (atomic,) + tuple(
+            name for name, parts in self.composite_shifts.items()
+            if atomic in parts
         )
 
     @property
@@ -230,14 +307,15 @@ class ScheduleConfig:
         slots = (
             len(self.weekend_indices)
             * self.min_ee
-            * len(self.working_shift_indices)
+            * len(self.atomic_working_shifts)
         )
         return slots // self.num_employees
 
     @property
     def fair_shifts(self) -> tuple[int, int]:
-        #fair band = shifts at minimum coverage, spread over all ee
-        slots = self.num_days * self.min_ee * len(self.working_shift_indices)
+        #fair band = coverage slots at minimum coverage, spread over all ee.
+        #a composite shift fills several slots in one day (see shift_load)
+        slots = self.num_days * self.min_ee * len(self.atomic_working_shifts)
         return slots // self.num_employees, -(-slots // self.num_employees)
 
 
@@ -248,7 +326,11 @@ DEFAULT_CONFIG = ScheduleConfig(
      "11.03","12.03","13.03","14.03","15.03","16.03","17.03","18.03","19.03","20.03",
      "21.03","22.03","23.03","24.03","25.03","26.03","27.03","28.03","29.03","30.03","31.03"],
     employees=list(range(1, 31)),
-    shifts=["1N", "2N", "3N", "R"],
+    #KNZ codes: Früh, Spät, Nacht, Früh+Nacht am selben Tag, Kompensation, Ruhe
+    shifts=["1N", "2N", "3N", "1N3N", "Komp", "R"],
+    compensation_shift="Komp",
+    compensation_follows=("3N", "1N3N"),
+    composite_shifts={"1N3N": ("1N", "3N")},
 
     min_ee=3,
     max_ee=5,
@@ -276,9 +358,17 @@ DEFAULT_CONFIG = ScheduleConfig(
     ],
 
     transitions=[
-        ("2N", "1N", -4),
-        ("1N", "3N", -4),
-        ("3N", "R", -4),
+        #standard sequence per KNZ document: 2N, 1N3N, Komp, Ruhetag
+        ("2N", "1N3N", -4),
+        ("1N3N", "Komp", -4),
+        ("Komp", "R", -4),
+        #documented second-priority sequences: "2N, 2N, 1N3N" / "2N, 1N3N, 3N"
+        ("2N", "2N", -2),
+        ("1N3N", "3N", -2),
+        #a night part ends 06:30, a morning shift starts 06:00: forbidden
         ("3N", "1N", 0),
+        ("3N", "1N3N", 0),
+        ("1N3N", "1N", 0),
+        ("1N3N", "1N3N", 0),
     ],
 )

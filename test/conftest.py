@@ -30,6 +30,9 @@ def tiny_config() -> ScheduleConfig:
         dayoff_requests=[],
         assignment_requests=[],
         transitions=[],
+        #the KNZ default of 3/8 rounds to 0 of the 2 weekend days here, which
+        #would make coverage infeasible; 1/2 keeps the cap at 1 and binding
+        max_weekend_work_ratio=1 / 2,
     )
 
 

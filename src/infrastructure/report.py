@@ -65,6 +65,7 @@ h1 { font-size: 20px; margin: 0 0 2px; }
 .grid td.s { color: var(--ink); font-weight: 600;
   border-left: 3px solid var(--sc); background:
   color-mix(in srgb, var(--sc) 22%%, var(--surface)); }
+.grid td.s2 { color: var(--ink); font-weight: 600; }
 .grid td.rest { color: var(--ink-2); }
 table.plain { border-collapse: collapse; margin-top: 8px; }
 table.plain th, table.plain td { padding: 3px 10px; text-align: right;
@@ -85,7 +86,10 @@ def _tile(value: str, label: str, flag: str = "") -> str:
 
 
 def _shift_style(config: ScheduleConfig) -> tuple[dict[str, int], str, str]:
-    working = [config.shifts[i] for i in config.working_shift_indices]
+    #only atomic shifts get a colour slot; composites are rendered as a
+    #split cell of their parts, so no fourth categorical colour is needed
+    #(the palette trio is validated all-pairs, a fourth slot would not be)
+    working = list(config.atomic_working_shifts)
     slot_of = {shift: i for i, shift in enumerate(working[:3])}
     light = "".join(
         f"  --s{i}: {SHIFT_COLORS[i][0]};\n" for i in range(len(slot_of))
@@ -113,9 +117,24 @@ def _grid(schedule, config: ScheduleConfig, slot_of) -> str:
         for d, shift in enumerate(days):
             classes = ["c"] + (["we"] if d in weekend else [])
             style = ""
+            parts = config.composite_shifts.get(shift, ())
             if shift in slot_of:
                 classes.append("s")
                 style = f' style="--sc: var(--s{slot_of[shift]})"'
+            elif parts and all(p in slot_of for p in parts):
+                #composite day: split the cell between its parts' colours
+                classes.append("s2")
+                stops = ", ".join(
+                    "color-mix(in srgb, var(--s%d) 22%%, var(--surface)) "
+                    "%d%% %d%%"
+                    % (slot_of[p], i * 100 // len(parts),
+                       (i + 1) * 100 // len(parts))
+                    for i, p in enumerate(parts)
+                )
+                style = (
+                    f' style="background: linear-gradient(90deg, {stops});'
+                    f' border-left: 3px solid var(--s{slot_of[parts[0]]})"'
+                )
             else:
                 classes.append("rest")
             tip = f"MA {e} — {config.days[d]} — {shift}"
@@ -143,7 +162,7 @@ def _employee_table(metrics: ScheduleMetrics) -> str:
         for e, worked in metrics.shifts_worked.items()
     )
     return (
-        '<table class="plain"><tr><th>Mitarbeiter:in</th><th>Schichten</th>'
+        '<table class="plain"><tr><th>Mitarbeiter:in</th><th>Schicht-Slots</th>'
         f"<th>Wochenendtage</th><th>Fair-Band {low}–{high}</th></tr>{rows}</table>"
     )
 
@@ -172,7 +191,7 @@ def render_report(
         ),
         _tile(f"{granted}/{total}", "Wünsche erfüllt"),
         _tile(
-            f"{low}–{high}", "Schichten pro MA",
+            f"{low}–{high}", "Schicht-Slots pro MA",
             flag="%d MA außerhalb" % len(metrics.employees_outside_fair_band)
             if metrics.employees_outside_fair_band else "",
         ),
@@ -183,16 +202,36 @@ def render_report(
         ),
     ]
 
-    legend = '<div class="legend">' + "".join(
+    legend_items = [
         f'<span><i class="chip" style="background: var(--s{i})"></i>'
         f"{html.escape(shift)}</span>"
         for shift, i in slot_of.items()
-    ) + (
+    ]
+    for name, parts in config.composite_shifts.items():
+        if all(p in slot_of for p in parts):
+            stops = ", ".join(
+                "var(--s%d) %d%% %d%%"
+                % (slot_of[p], i * 100 // len(parts), (i + 1) * 100 // len(parts))
+                for i, p in enumerate(parts)
+            )
+            legend_items.append(
+                f'<span><i class="chip" style="background:'
+                f' linear-gradient(90deg, {stops})"></i>'
+                f"{html.escape(name)} ({'+'.join(parts)})</span>"
+            )
+    if config.compensation_shift:
+        legend_items.append(
+            '<span><i class="chip" style="background: var(--surface-2);'
+            ' border: 1px solid var(--line)"></i>'
+            f"{html.escape(config.compensation_shift)} (Kompensation)</span>"
+        )
+    legend_items.append(
         '<span><i class="chip" style="background: var(--surface-2);'
         ' border: 1px solid var(--line)"></i>'
         f"{html.escape(config.rest_shift)} (frei)</span>"
-        "<span>graue Spalten = Wochenende</span></div>"
     )
+    legend_items.append("<span>graue Spalten = Wochenende</span>")
+    legend = '<div class="legend">' + "".join(legend_items) + "</div>"
 
     checks = "".join(
         f"<li>{html.escape(line)}</li>" for line in summary_lines(metrics, config)

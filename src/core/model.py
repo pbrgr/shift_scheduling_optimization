@@ -84,12 +84,44 @@ def add_one_shift_per_day(sm: ScheduleModel, config: ScheduleConfig) -> None:
 
 
 def add_cover_constraints(sm: ScheduleModel, config: ScheduleConfig) -> None:
-    #R is not covered, so only the working shifts get a headcount
-    for s in config.working_shift_indices:
+    #free shifts are not covered; a composite shift (e.g. 1N3N) counts
+    #towards the coverage of each of its parts
+    for atomic in config.atomic_working_shifts:
+        indices = [config.shifts.index(s) for s in config.shifts_covering(atomic)]
         for d in range(config.num_days):
-            assigned = [sm.work[e, s, d] for e in config.employees]
+            assigned = [
+                sm.work[e, s, d] for e in config.employees for s in indices
+            ]
             sm.model.add(sum(assigned) >= config.min_ee)
             sm.model.add(sum(assigned) <= config.max_ee)
+
+
+def add_compensation_rule(sm: ScheduleModel, config: ScheduleConfig) -> None:
+    #a compensation day is only allowed right after a night duty
+    if config.compensation_shift is None:
+        return
+
+    comp = config.shifts.index(config.compensation_shift)
+    follows = [config.shifts.index(s) for s in config.compensation_follows]
+
+    #day 0 has no visible predecessor. left open, the solver hands out free
+    #compensation days there to collect the Komp->R transition reward, so it
+    #is forbidden unless the planner fixed it (night duty in the prior month)
+    fixed_day0 = {
+        e
+        for e, day, shift in config.all_fixed_assignments
+        if day == config.days[0] and shift == config.compensation_shift
+    }
+
+    for e in config.employees:
+        if e not in fixed_day0:
+            sm.model.add(sm.work[e, comp, 0] == 0)
+
+        for d in range(1, config.num_days):
+            sm.model.add_bool_or(
+                [~sm.work[e, comp, d]]
+                + [sm.work[e, f, d - 1] for f in follows]
+            )
 
 
 def add_transitions(
@@ -173,21 +205,29 @@ def add_weekend_fairness(sm: ScheduleModel, config: ScheduleConfig) -> None:
 def add_workload_fairness(sm: ScheduleModel, config: ScheduleConfig) -> None:
     fair_min, fair_max = config.fair_shifts
 
+    #a composite shift fills several coverage slots in one day, so it has to
+    #weigh accordingly, otherwise a 1N3N day would look like half the work
+    hard_max = config.num_days * max(
+        (config.shift_load(config.shifts[s]) for s in config.working_shift_indices),
+        default=1,
+    )
+
     for e in config.employees:
-        #exactly one shift per day, so summing the working shifts over all
-        #days counts the days actually worked
-        total_work = [
-            sm.work[e, s, d]
-            for d in range(config.num_days)
-            for s in config.working_shift_indices
-        ]
+        #exactly one shift per day, so summing the weighted working shifts
+        #over all days counts the coverage slots actually filled
+        total_work = []
+        for d in range(config.num_days):
+            for s in config.working_shift_indices:
+                total_work.extend(
+                    [sm.work[e, s, d]] * config.shift_load(config.shifts[s])
+                )
 
         sm.add_int_costs(*add_soft_sum(
             sm.model,
             total_work,
             fair_min,
             fair_max,
-            config.num_days,
+            hard_max,
             config.weight_workload_fairness,
             config.weight_workload_fairness,
             f"workload_{e}",
@@ -216,6 +256,7 @@ def build_model(config: ScheduleConfig) -> ScheduleModel:
 
     add_one_shift_per_day(sm, config)
     add_cover_constraints(sm, config)
+    add_compensation_rule(sm, config)
     add_transitions(sm, config, fmt)
     add_assignments_and_requests(sm, config, fmt)
     add_weekend_fairness(sm, config)
