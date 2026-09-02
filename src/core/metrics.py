@@ -20,6 +20,10 @@ class ScheduleMetrics:
 
     #coverage per working shift: (min, max) over all days
     coverage: dict[str, tuple[int, int]]
+    #head-slots missing below min_ee resp. exceeding max_ee, over all
+    #shifts and days — nonzero means the plan violates the staffing rules
+    understaffed_slots: int
+    overstaffed_slots: int
 
     #transitions
     rewarded_transitions: dict[tuple[str, str], int]
@@ -92,6 +96,7 @@ def compute_metrics(schedule: Schedule, config: ScheduleConfig) -> ScheduleMetri
     }
 
     coverage = {}
+    understaffed = overstaffed = 0
     for atomic in config.atomic_working_shifts:
         covering = set(config.shifts_covering(atomic))
         per_day = [
@@ -99,6 +104,8 @@ def compute_metrics(schedule: Schedule, config: ScheduleConfig) -> ScheduleMetri
             for d in range(config.num_days)
         ]
         coverage[atomic] = (min(per_day), max(per_day))
+        understaffed += sum(max(0, config.min_ee - n) for n in per_day)
+        overstaffed += sum(max(0, n - config.max_ee) for n in per_day)
 
     rewarded, forbidden = {}, {}
     for prev_shift, next_shift, reward in config.transitions:
@@ -116,6 +123,8 @@ def compute_metrics(schedule: Schedule, config: ScheduleConfig) -> ScheduleMetri
         shifts_worked=shifts_worked,
         weekend_days_worked=weekend_days_worked,
         coverage=coverage,
+        understaffed_slots=understaffed,
+        overstaffed_slots=overstaffed,
         rewarded_transitions=rewarded,
         forbidden_transitions=forbidden,
         requests_granted=requests_granted,
@@ -147,6 +156,11 @@ def summary_lines(metrics: ScheduleMetrics, config: ScheduleConfig) -> list[str]
         lines.append(
             "Coverage %s: %d to %d per day (allowed %d to %d)"
             % (shift, c_min, c_max, config.min_ee, config.max_ee)
+        )
+    if metrics.understaffed_slots or metrics.overstaffed_slots:
+        lines.append(
+            "STAFFING VIOLATED: %d head-slots missing, %d above max"
+            % (metrics.understaffed_slots, metrics.overstaffed_slots)
         )
 
     lines.append(

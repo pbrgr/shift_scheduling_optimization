@@ -148,20 +148,30 @@ generate_schedule(replace(DEFAULT_CONFIG, min_ee=4), output_path="output_min4")
 
 ## Model
 
-Hard constraints:
+**The plan always computes.** Business rules are penalised, never enforced:
+an impossible selection yields a plan with visible violations (in the log,
+the metrics and the report) rather than `INFEASIBLE`. The penalty weights
+order which rule bends first — understaffing is most expensive
+(`weight_understaffing`), then forbidden sequences
+(`weight_forbidden_transition`), then the weekend cap (`weight_weekend_cap`),
+then over-staffing. Where the selection allows it, the penalties dominate and
+every rule holds exactly.
 
-- exactly one shift entry per employee and day; a composite shift like `1N3N`
-  counts towards the coverage of both its parts and fills two workload slots
+Penalised rules:
+
 - `min_ee` to `max_ee` employees per atomic working shift and day (`R` and
-  `Komp` are not covered)
-- `Komp` is only allowed right after one of `compensation_follows` (`3N`,
-  `1N3N`); on day 0 it is forbidden unless the planner fixed it, since the
-  previous month is not visible
-- fixed assignments and fixed days off
-- transitions with reward `0` are forbidden outright (a night part ends 06:30,
-  a morning shift starts 06:00)
-- at most `max_weekend_work_ratio` of the weekend days per employee — 3/8 per
-  the KNZ document ("5 of 8 weekend days free")
+  `Komp` are not covered); a composite `1N3N` counts towards both its parts
+- transitions with reward `0` — forbidden in the KNZ sense (a night part
+  ends 06:30, a morning shift starts 06:00), but survivable so that manually
+  planned Avanti entries violating them cannot break the model
+- at most `max_weekend_work_ratio` of the weekend days per employee — 3/8
+  per the KNZ document ("5 of 8 weekend days free")
+
+Hard remains only what protects data integrity and can never cause
+infeasibility on a validated config: exactly one entry per employee and day,
+fixed assignments from Avanti (contradictions are rejected by validation
+before solving), and `Komp` only right after one of `compensation_follows`
+(on day 0 only when fixed by the planner).
 
 Soft terms, weighted into the objective:
 

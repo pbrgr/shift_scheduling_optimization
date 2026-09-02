@@ -85,15 +85,25 @@ def add_one_shift_per_day(sm: ScheduleModel, config: ScheduleConfig) -> None:
 
 def add_cover_constraints(sm: ScheduleModel, config: ScheduleConfig) -> None:
     #free shifts are not covered; a composite shift (e.g. 1N3N) counts
-    #towards the coverage of each of its parts
+    #towards the coverage of each of its parts. coverage is penalised, not
+    #enforced: a selection too small for min_ee still yields a plan, with
+    #the understaffing dominating the objective and reported prominently
     for atomic in config.atomic_working_shifts:
         indices = [config.shifts.index(s) for s in config.shifts_covering(atomic)]
         for d in range(config.num_days):
             assigned = [
                 sm.work[e, s, d] for e in config.employees for s in indices
             ]
-            sm.model.add(sum(assigned) >= config.min_ee)
-            sm.model.add(sum(assigned) <= config.max_ee)
+            sm.add_int_costs(*add_soft_sum(
+                sm.model,
+                assigned,
+                config.min_ee,
+                config.max_ee,
+                len(assigned),
+                config.weight_understaffing,
+                config.weight_overstaffing,
+                f"cover_{atomic}_{d}",
+            ))
 
 
 def add_compensation_rule(sm: ScheduleModel, config: ScheduleConfig) -> None:
@@ -136,23 +146,22 @@ def add_transitions(
 
         for e in config.employees:
             for d in range(config.num_days - 1):
-                if reward == 0:
-                    #forbid the transition outright
-                    sm.model.add_bool_or([
-                        ~sm.work[e, prev_shift, d],
-                        ~sm.work[e, next_shift, d + 1],
-                    ])
-                else:
-                    #trans_var must equal the transition actually happening,
-                    #otherwise a negative reward would be collected for free
-                    trans_var = sm.model.new_bool_var(
-                        f"transition_{prev_shift}_{next_shift}_{e}_{d}"
-                    )
-                    sm.model.add_min_equality(
-                        trans_var,
-                        [sm.work[e, prev_shift, d], sm.work[e, next_shift, d + 1]],
-                    )
-                    sm.add_bool_cost(trans_var, reward)
+                #trans_var must equal the transition actually happening,
+                #otherwise a negative reward would be collected for free
+                trans_var = sm.model.new_bool_var(
+                    f"transition_{prev_shift}_{next_shift}_{e}_{d}"
+                )
+                sm.model.add_min_equality(
+                    trans_var,
+                    [sm.work[e, prev_shift, d], sm.work[e, next_shift, d + 1]],
+                )
+                #"reward 0" means forbidden; penalised rather than enforced,
+                #so fixed entries that already violate it (planned manually
+                #in Avanti) cannot make the model infeasible
+                sm.add_bool_cost(
+                    trans_var,
+                    config.weight_forbidden_transition if reward == 0 else reward,
+                )
 
 
 def add_assignments_and_requests(
@@ -190,14 +199,16 @@ def add_weekend_fairness(sm: ScheduleModel, config: ScheduleConfig) -> None:
             )
             weekend_work.append(worked_that_day)
 
+        #the cap is penalised, not enforced, so a selection with too few
+        #people still yields a plan; the excess shows up in the report
         sm.add_int_costs(*add_soft_sum(
             sm.model,
             weekend_work,
             config.fair_weekend_days,
             config.max_weekend_days_worked,
-            config.max_weekend_days_worked,
+            len(weekend_work),
             config.weight_weekend_fairness,
-            0, #upper bound is already hard capped
+            config.weight_weekend_cap,
             f"weekend_{e}",
         ))
 

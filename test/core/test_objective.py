@@ -53,16 +53,24 @@ def recomputed_objective(schedule: dict, config: ScheduleConfig) -> int:
         if schedule[employee][config.days.index(day)] == shift:
             total += config.weight_shift_request
 
-    #transitions are rewarded once per occurrence, reward 0 means forbidden
+    #transitions are rewarded once per occurrence; "reward 0" means
+    #forbidden, which is penalised rather than enforced
     for prev_shift, next_shift, reward in config.transitions:
-        if reward == 0:
-            continue
+        cost = config.weight_forbidden_transition if reward == 0 else reward
         for days in schedule.values():
-            total += reward * sum(
+            total += cost * sum(
                 1
                 for d in range(len(days) - 1)
                 if days[d] == prev_shift and days[d + 1] == next_shift
             )
+
+    #coverage is penalised on both sides instead of enforced
+    for atomic in config.atomic_working_shifts:
+        covering = set(config.shifts_covering(atomic))
+        for d in range(config.num_days):
+            n = sum(1 for days in schedule.values() if days[d] in covering)
+            total += config.weight_understaffing * max(0, config.min_ee - n)
+            total += config.weight_overstaffing * max(0, n - config.max_ee)
 
     #weekend fairness penalises days below the fair share; a compensation
     #day counts as free just like the rest shift
@@ -74,6 +82,9 @@ def recomputed_objective(schedule: dict, config: ScheduleConfig) -> int:
         )
         total += config.weight_weekend_fairness * max(
             0, config.fair_weekend_days - worked
+        )
+        total += config.weight_weekend_cap * max(
+            0, worked - config.max_weekend_days_worked
         )
 
     #workload fairness penalises both directions out of the fair band,

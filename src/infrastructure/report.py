@@ -184,6 +184,10 @@ def render_report(
     tiles = [
         _tile(solver_status, "Solver-Status"),
         _tile("%.0f" % objective, "Objective (Lücke %.0f)" % gap),
+        _tile(
+            str(metrics.understaffed_slots), "fehlende Besetzung (Slots)",
+            flag="Mindestbestand verletzt" if metrics.understaffed_slots else "",
+        ),
         _tile(str(metrics.total_rewarded_transitions), "belohnte Übergänge"),
         _tile(
             str(metrics.total_forbidden_transitions), "verbotene Übergänge",

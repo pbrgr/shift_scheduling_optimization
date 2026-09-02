@@ -76,6 +76,16 @@ class ScheduleConfig:
     #5 of 8 weekend days per month are FREE, so at most 3 of 8 are worked
     max_weekend_work_ratio: float = 3 / 8
 
+    #the plan must always compute: coverage, forbidden sequences and the
+    #weekend cap are penalised instead of enforced, so an impossible
+    #selection yields a plan with visible violations rather than INFEASIBLE.
+    #the weights order who bends first: understaffing is worst, then
+    #forbidden sequences, then the weekend cap
+    weight_understaffing: int = 100 #per missing head below min_ee, per shift/day
+    weight_overstaffing: int = 10 #per head above max_ee, per shift/day
+    weight_forbidden_transition: int = 50 #per occurrence of a "reward 0" pair
+    weight_weekend_cap: int = 30 #per weekend day above max_weekend_days_worked
+
     #CP-SAT detects and breaks symmetries itself at its default of 2. Measured
     #over 3 runs each on DEFAULT_CONFIG, that costs more search time than it
     #saves here: level 2 landed at a gap of 38-43, levels 0 and 1 at 28-32.
