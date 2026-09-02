@@ -3,7 +3,9 @@ from datetime import datetime
 import os
 import sys
 
-def setup_logging(base_output_path: str) -> logging.Logger:
+def setup_logging(base_output_path: str, console_stream=None) -> logging.Logger:
+    #console_stream defaults to stdout; the Avanti filter passes stderr,
+    #since its stdout must carry nothing but the result JSON
     logs_dir = os.path.join(base_output_path, "logs")
     os.makedirs(logs_dir, exist_ok=True)
    # logs_dir.mkdir(parents=True, exist_ok=True)
@@ -27,7 +29,7 @@ def setup_logging(base_output_path: str) -> logging.Logger:
     file_handler.setLevel(logging.INFO)
     file_handler.setFormatter(formatter_obj)
 
-    console_handler = logging.StreamHandler(sys.stdout)
+    console_handler = logging.StreamHandler(console_stream or sys.stdout)
     console_handler.setLevel(logging.INFO)
     console_handler.setFormatter(formatter_obj)
 

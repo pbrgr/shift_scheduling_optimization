@@ -40,6 +40,34 @@ pytest
 `notebooks/check_scheduler_results.ipynb` inspects that CSV against the same
 configuration the solver used.
 
+## Avanti integration
+
+`src/app/avanti_filter.py` is a Unix filter matching the DPService contract:
+the Avanti payload on stdin, the result JSON on stdout, logs on stderr, exit
+status 0 on success:
+
+```bash
+python -m src.app.avanti_filter < input.json > output.json
+```
+
+`src/infrastructure/avanti.py` translates the payload into a
+`ScheduleConfig`: it filters the resources to real active employees, takes
+period and weekend flags (including holidays) from Avanti, treats existing
+entries and approved wishes as fixed, pending wishes as soft requests and
+rejected wishes as plannable. Entries with codes outside the model (office
+days, Pikett, ...) block the day. The rule set — coverage, weights,
+transitions, the KNZ shift system — comes from a `ScheduleConfig` template,
+not from the payload.
+
+The reader touches only the fields it needs and fails loudly on anything
+missing, so a payload format change surfaces as a clear error instead of a
+wrong plan. Output entries carry `pofID`, `dienstCodeID` and `zeitStart`
+with the shift's start time; free days are not returned, a composite `1N3N`
+day becomes two entries. These and the remaining interface assumptions are
+documented at the top of `avanti.py` and await confirmation by the DPService
+owner. The structure-identical (anonymised) fixture lives in
+`test/fixtures/avanti_input.json`; the real examples stay outside the repo.
+
 ## Layout
 
 	core/ = pure domain and algorithm

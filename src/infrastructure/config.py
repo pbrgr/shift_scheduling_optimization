@@ -81,6 +81,11 @@ class ScheduleConfig:
     #saves here: level 2 landed at a gap of 38-43, levels 0 and 1 at 28-32.
     symmetry_level: int = 1
 
+    #normally weekends are derived from the calendar. a data source that
+    #knows better (Avanti flags saturdays, sundays AND holidays) can override
+    #them; one 0/1 flag per day, aligned with `days`
+    weekends_override: tuple[int, ...] | None = None
+
     def days_on_weekday(self, weekday: int) -> list[str]:
         return [
             day
@@ -189,6 +194,15 @@ class ScheduleConfig:
             for duplicate in self._duplicates(values):
                 found.append(f"{label} contains {duplicate!r} more than once")
 
+        if self.weekends_override is not None:
+            if len(self.weekends_override) != len(self.days):
+                found.append(
+                    "weekends_override has %d entries for %d days"
+                    % (len(self.weekends_override), len(self.days))
+                )
+            if any(v not in (0, 1) for v in self.weekends_override):
+                found.append("weekends_override entries must be 0 or 1")
+
         if self.min_ee > self.max_ee:
             found.append(f"min_ee {self.min_ee} is above max_ee {self.max_ee}")
         if self.min_ee < 0:
@@ -290,7 +304,10 @@ class ScheduleConfig:
 
     @property
     def weekends(self) -> list[int]:
-        #derived from the calendar, so it can never drift from the dates
+        #derived from the calendar, so it can never drift from the dates —
+        #unless a better-informed source supplied its own flags
+        if self.weekends_override is not None:
+            return list(self.weekends_override)
         return weekend_flags(self.days, self.year)
 
     @property
