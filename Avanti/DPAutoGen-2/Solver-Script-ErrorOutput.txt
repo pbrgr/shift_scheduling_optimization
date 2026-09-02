@@ -1,0 +1,604 @@
+raw_in len:  340093
+raw_in starts with {"$id":1,"@xdata.type":"DPS.Elements.DienstEinteilungen.Generieren.TDPEDienstEinteilungenGenerierenInput","parameter":{"$id":2,"@xdata.type":"DPS.Elements.DienstEinteilungen.Generieren.TDPEDienstEinte
+Ressource ID 1: QHIJ
+Ressource ID 2: QGEB
+Ressource ID 3: PMFU
+Ressource ID 4: None
+Ressource ID 5: AVANTI
+Ressource ID 6: TAAWISI8
+Ressource ID 7: DP_Mitar
+Ressource ID 8: PMBG
+Ressource ID 9: PBYN
+Ressource ID 10: PHNK
+Employees: [ 1  2  3  4  5  6  7  8  9 10]
+Days: ['05.10', '06.10', '07.10', '08.10', '09.10', '10.10', '11.10', '12.10', '13.10', '14.10', '15.10', '16.10', '17.10', '18.10', '19.10', '20.10', '21.10', '22.10', '23.10']
+Weekends: [0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+2026-08-24 09:45:19,365 | INFO | Logging initialized
+2026-08-24 09:45:19,365 | INFO | Log file: output\logs\run_20260824_094519.log
+2026-08-24 09:45:19,366 | INFO | Starting schedule generation
+2026-08-24 09:45:19,366 | INFO | Employees: 10
+2026-08-24 09:45:19,366 | INFO | Days: 19
+2026-08-24 09:45:19,366 | INFO | Shifts: ['1N', '2N', '3N', 'R']
+2026-08-24 09:45:19,366 | INFO | Min employees per shift: 3
+2026-08-24 09:45:19,366 | INFO | Max employees per shift: 5
+2026-08-24 09:45:19,367 | INFO | Creating decision variables
+2026-08-24 09:45:19,373 | INFO | Adding one-shift-per-day constraints
+2026-08-24 09:45:19,375 | INFO | Adding coverage constraints
+2026-08-24 09:45:19,388 | INFO | Preparing fixed assignments
+2026-08-24 09:45:19,388 | INFO | Fixed assignments count: 0
+2026-08-24 09:45:19,389 | INFO | Preparing requests
+2026-08-24 09:45:19,389 | INFO | Requests count: 0
+2026-08-24 09:45:19,389 | INFO | Objective bool terms: 540
+2026-08-24 09:45:19,389 | INFO | Objective int terms: 0
+2026-08-24 09:45:19,394 | INFO | Solving model
+2026-08-24 09:45:19,532 | INFO | Solver finished with status: OPTIMAL
+2026-08-24 09:45:19,545 | INFO | worker 1: 2N 1N 3N 2N 2N 2N 3N R 3N 3N 3N 3N 3N 3N 2N 2N 1N 3N 3N 
+2026-08-24 09:45:19,545 | INFO | worker 2: 2N 3N R 1N 1N 1N 1N 2N 2N 1N 3N 3N 3N 2N 3N 3N 2N 2N 3N 
+2026-08-24 09:45:19,547 | INFO | worker 3: 3N 2N 2N 2N 3N 3N 2N 1N 3N 2N 3N 3N 2N 3N R 1N 2N 1N 1N 
+2026-08-24 09:45:19,547 | INFO | worker 4: 1N 1N 3N 3N 2N 1N 2N 1N 1N 1N 1N 1N 3N 2N 1N 1N 3N R 2N 
+2026-08-24 09:45:19,547 | INFO | worker 5: 2N 3N 2N 1N 1N 1N 1N 1N 1N 3N 2N 2N 1N 1N 1N 3N 2N 1N 2N 
+2026-08-24 09:45:19,547 | INFO | worker 6: 3N 2N 1N 3N 3N R 1N 3N 3N 2N 1N 1N 1N R 1N R R 1N 1N 
+2026-08-24 09:45:19,547 | INFO | worker 7: 3N 3N 3N 2N 2N 2N 3N 3N 2N 2N 2N 2N 1N 2N 3N 2N 3N 3N 2N 
+2026-08-24 09:45:19,548 | INFO | worker 8: 1N 1N 1N 1N 1N 3N 2N 2N 1N 1N 1N 2N 2N 1N 3N 3N 3N 2N 1N 
+2026-08-24 09:45:19,548 | INFO | worker 9: 1N R 1N R R 3N 3N 3N R R R 1N 2N 1N 2N 1N 1N 2N R 
+2026-08-24 09:45:19,548 | INFO | worker 10: R 2N 2N 3N 3N 2N R 2N 2N 3N 2N R R 3N 2N 2N 1N 3N 3N 
+2026-08-24 09:45:19,548 | INFO | Schedule CSV written to output\schedule.csv
+2026-08-24 09:45:19,548 | INFO | Penalties:
+2026-08-24 09:45:19,548 | INFO |   transition (employee=1, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,548 | INFO |   transition (employee=1, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,548 | INFO |   transition (employee=1, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,548 | INFO |   transition (employee=1, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,548 | INFO |   transition (employee=1, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,548 | INFO |   transition (employee=1, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,549 | INFO |   transition (employee=1, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,549 | INFO |   transition (employee=1, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,549 | INFO |   transition (employee=1, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,549 | INFO |   transition (employee=1, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,550 | INFO |   transition (employee=1, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,550 | INFO |   transition (employee=1, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,550 | INFO |   transition (employee=1, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,550 | INFO |   transition (employee=1, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,550 | INFO |   transition (employee=1, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,550 | INFO |   transition (employee=1, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,550 | INFO |   transition (employee=1, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,550 | INFO |   transition (employee=1, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,550 | INFO |   transition (employee=2, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,551 | INFO |   transition (employee=2, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,551 | INFO |   transition (employee=2, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,551 | INFO |   transition (employee=2, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,551 | INFO |   transition (employee=2, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,551 | INFO |   transition (employee=2, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,551 | INFO |   transition (employee=2, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,551 | INFO |   transition (employee=2, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,552 | INFO |   transition (employee=2, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,552 | INFO |   transition (employee=2, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,552 | INFO |   transition (employee=2, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,552 | INFO |   transition (employee=2, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,552 | INFO |   transition (employee=2, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,552 | INFO |   transition (employee=2, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,552 | INFO |   transition (employee=2, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,552 | INFO |   transition (employee=2, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,552 | INFO |   transition (employee=2, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,553 | INFO |   transition (employee=2, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,553 | INFO |   transition (employee=3, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,553 | INFO |   transition (employee=3, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,553 | INFO |   transition (employee=3, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,553 | INFO |   transition (employee=3, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,553 | INFO |   transition (employee=3, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,553 | INFO |   transition (employee=3, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,553 | INFO |   transition (employee=3, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,554 | INFO |   transition (employee=3, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,554 | INFO |   transition (employee=3, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,554 | INFO |   transition (employee=3, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,554 | INFO |   transition (employee=3, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,554 | INFO |   transition (employee=3, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,554 | INFO |   transition (employee=3, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,554 | INFO |   transition (employee=3, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,554 | INFO |   transition (employee=3, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,554 | INFO |   transition (employee=3, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,555 | INFO |   transition (employee=3, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,555 | INFO |   transition (employee=3, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,555 | INFO |   transition (employee=4, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,555 | INFO |   transition (employee=4, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,555 | INFO |   transition (employee=4, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,555 | INFO |   transition (employee=4, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,555 | INFO |   transition (employee=4, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,555 | INFO |   transition (employee=4, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,556 | INFO |   transition (employee=4, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,556 | INFO |   transition (employee=4, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,556 | INFO |   transition (employee=4, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,556 | INFO |   transition (employee=4, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,556 | INFO |   transition (employee=4, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,556 | INFO |   transition (employee=4, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,556 | INFO |   transition (employee=4, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,556 | INFO |   transition (employee=4, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,556 | INFO |   transition (employee=4, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,557 | INFO |   transition (employee=4, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,557 | INFO |   transition (employee=4, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,557 | INFO |   transition (employee=4, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,557 | INFO |   transition (employee=5, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,557 | INFO |   transition (employee=5, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,557 | INFO |   transition (employee=5, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,557 | INFO |   transition (employee=5, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,558 | INFO |   transition (employee=5, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,558 | INFO |   transition (employee=5, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,558 | INFO |   transition (employee=5, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,558 | INFO |   transition (employee=5, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,558 | INFO |   transition (employee=5, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,558 | INFO |   transition (employee=5, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,558 | INFO |   transition (employee=5, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,558 | INFO |   transition (employee=5, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,558 | INFO |   transition (employee=5, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,559 | INFO |   transition (employee=5, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,559 | INFO |   transition (employee=5, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,559 | INFO |   transition (employee=5, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,559 | INFO |   transition (employee=5, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,559 | INFO |   transition (employee=5, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,559 | INFO |   transition (employee=6, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,559 | INFO |   transition (employee=6, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,559 | INFO |   transition (employee=6, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,560 | INFO |   transition (employee=6, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,560 | INFO |   transition (employee=6, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,560 | INFO |   transition (employee=6, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,560 | INFO |   transition (employee=6, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,560 | INFO |   transition (employee=6, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,560 | INFO |   transition (employee=6, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,560 | INFO |   transition (employee=6, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,560 | INFO |   transition (employee=6, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,560 | INFO |   transition (employee=6, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,561 | INFO |   transition (employee=6, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,561 | INFO |   transition (employee=6, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,561 | INFO |   transition (employee=6, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,561 | INFO |   transition (employee=6, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,561 | INFO |   transition (employee=6, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,561 | INFO |   transition (employee=6, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,561 | INFO |   transition (employee=7, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,561 | INFO |   transition (employee=7, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,562 | INFO |   transition (employee=7, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,562 | INFO |   transition (employee=7, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,562 | INFO |   transition (employee=7, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,562 | INFO |   transition (employee=7, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,562 | INFO |   transition (employee=7, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,562 | INFO |   transition (employee=7, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,562 | INFO |   transition (employee=7, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,562 | INFO |   transition (employee=7, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,563 | INFO |   transition (employee=7, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,563 | INFO |   transition (employee=7, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,563 | INFO |   transition (employee=7, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,563 | INFO |   transition (employee=7, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,563 | INFO |   transition (employee=7, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,563 | INFO |   transition (employee=7, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,563 | INFO |   transition (employee=7, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,563 | INFO |   transition (employee=7, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,563 | INFO |   transition (employee=8, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,564 | INFO |   transition (employee=8, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,564 | INFO |   transition (employee=8, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,564 | INFO |   transition (employee=8, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,564 | INFO |   transition (employee=8, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,564 | INFO |   transition (employee=8, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,564 | INFO |   transition (employee=8, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,564 | INFO |   transition (employee=8, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,564 | INFO |   transition (employee=8, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,565 | INFO |   transition (employee=8, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,565 | INFO |   transition (employee=8, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,565 | INFO |   transition (employee=8, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,565 | INFO |   transition (employee=8, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,565 | INFO |   transition (employee=8, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,565 | INFO |   transition (employee=8, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,565 | INFO |   transition (employee=8, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,565 | INFO |   transition (employee=8, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,565 | INFO |   transition (employee=8, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,566 | INFO |   transition (employee=9, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,566 | INFO |   transition (employee=9, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,566 | INFO |   transition (employee=9, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,566 | INFO |   transition (employee=9, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,566 | INFO |   transition (employee=9, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,566 | INFO |   transition (employee=9, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,566 | INFO |   transition (employee=9, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,566 | INFO |   transition (employee=9, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,567 | INFO |   transition (employee=9, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,567 | INFO |   transition (employee=9, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,567 | INFO |   transition (employee=9, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,567 | INFO |   transition (employee=9, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,567 | INFO |   transition (employee=9, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,567 | INFO |   transition (employee=9, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,567 | INFO |   transition (employee=9, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,567 | INFO |   transition (employee=9, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,567 | INFO |   transition (employee=9, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,568 | INFO |   transition (employee=9, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,568 | INFO |   transition (employee=10, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,568 | INFO |   transition (employee=10, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,568 | INFO |   transition (employee=10, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,568 | INFO |   transition (employee=10, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,568 | INFO |   transition (employee=10, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,568 | INFO |   transition (employee=10, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,568 | INFO |   transition (employee=10, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,569 | INFO |   transition (employee=10, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,569 | INFO |   transition (employee=10, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,569 | INFO |   transition (employee=10, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,569 | INFO |   transition (employee=10, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,569 | INFO |   transition (employee=10, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,569 | INFO |   transition (employee=10, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,569 | INFO |   transition (employee=10, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,569 | INFO |   transition (employee=10, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,570 | INFO |   transition (employee=10, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,570 | INFO |   transition (employee=10, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,570 | INFO |   transition (employee=10, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,570 | INFO |   transition (employee=1, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,570 | INFO |   transition (employee=1, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,570 | INFO |   transition (employee=1, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,570 | INFO |   transition (employee=1, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,570 | INFO |   transition (employee=1, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,571 | INFO |   transition (employee=1, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,571 | INFO |   transition (employee=1, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,571 | INFO |   transition (employee=1, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,571 | INFO |   transition (employee=1, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,571 | INFO |   transition (employee=1, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,571 | INFO |   transition (employee=1, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,571 | INFO |   transition (employee=1, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,571 | INFO |   transition (employee=1, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,572 | INFO |   transition (employee=1, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,572 | INFO |   transition (employee=1, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,572 | INFO |   transition (employee=1, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,572 | INFO |   transition (employee=1, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,572 | INFO |   transition (employee=1, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,572 | INFO |   transition (employee=2, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,572 | INFO |   transition (employee=2, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,572 | INFO |   transition (employee=2, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,573 | INFO |   transition (employee=2, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,573 | INFO |   transition (employee=2, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,573 | INFO |   transition (employee=2, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,573 | INFO |   transition (employee=2, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,573 | INFO |   transition (employee=2, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,573 | INFO |   transition (employee=2, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,573 | INFO |   transition (employee=2, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,573 | INFO |   transition (employee=2, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,573 | INFO |   transition (employee=2, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,574 | INFO |   transition (employee=2, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,574 | INFO |   transition (employee=2, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,574 | INFO |   transition (employee=2, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,574 | INFO |   transition (employee=2, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,574 | INFO |   transition (employee=2, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,574 | INFO |   transition (employee=2, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,574 | INFO |   transition (employee=3, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,574 | INFO |   transition (employee=3, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,574 | INFO |   transition (employee=3, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,575 | INFO |   transition (employee=3, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,575 | INFO |   transition (employee=3, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,575 | INFO |   transition (employee=3, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,575 | INFO |   transition (employee=3, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,575 | INFO |   transition (employee=3, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,575 | INFO |   transition (employee=3, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,575 | INFO |   transition (employee=3, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,575 | INFO |   transition (employee=3, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,575 | INFO |   transition (employee=3, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,576 | INFO |   transition (employee=3, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,576 | INFO |   transition (employee=3, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,576 | INFO |   transition (employee=3, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,576 | INFO |   transition (employee=3, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,576 | INFO |   transition (employee=3, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,576 | INFO |   transition (employee=3, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,576 | INFO |   transition (employee=4, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,576 | INFO |   transition (employee=4, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,577 | INFO |   transition (employee=4, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,577 | INFO |   transition (employee=4, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,577 | INFO |   transition (employee=4, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,577 | INFO |   transition (employee=4, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,577 | INFO |   transition (employee=4, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,577 | INFO |   transition (employee=4, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,577 | INFO |   transition (employee=4, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,577 | INFO |   transition (employee=4, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,577 | INFO |   transition (employee=4, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,578 | INFO |   transition (employee=4, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,578 | INFO |   transition (employee=4, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,578 | INFO |   transition (employee=4, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,578 | INFO |   transition (employee=4, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,578 | INFO |   transition (employee=4, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,578 | INFO |   transition (employee=4, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,578 | INFO |   transition (employee=4, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,578 | INFO |   transition (employee=5, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,579 | INFO |   transition (employee=5, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,579 | INFO |   transition (employee=5, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,579 | INFO |   transition (employee=5, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,579 | INFO |   transition (employee=5, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,579 | INFO |   transition (employee=5, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,579 | INFO |   transition (employee=5, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,579 | INFO |   transition (employee=5, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,579 | INFO |   transition (employee=5, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,580 | INFO |   transition (employee=5, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,580 | INFO |   transition (employee=5, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,580 | INFO |   transition (employee=5, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,580 | INFO |   transition (employee=5, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,580 | INFO |   transition (employee=5, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,580 | INFO |   transition (employee=5, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,580 | INFO |   transition (employee=5, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,581 | INFO |   transition (employee=5, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,581 | INFO |   transition (employee=5, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,581 | INFO |   transition (employee=6, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,581 | INFO |   transition (employee=6, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,581 | INFO |   transition (employee=6, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,581 | INFO |   transition (employee=6, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,581 | INFO |   transition (employee=6, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,582 | INFO |   transition (employee=6, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,582 | INFO |   transition (employee=6, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,582 | INFO |   transition (employee=6, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,582 | INFO |   transition (employee=6, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,582 | INFO |   transition (employee=6, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,582 | INFO |   transition (employee=6, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,583 | INFO |   transition (employee=6, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,583 | INFO |   transition (employee=6, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,583 | INFO |   transition (employee=6, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,583 | INFO |   transition (employee=6, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,583 | INFO |   transition (employee=6, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,583 | INFO |   transition (employee=6, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,583 | INFO |   transition (employee=6, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,584 | INFO |   transition (employee=7, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,584 | INFO |   transition (employee=7, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,584 | INFO |   transition (employee=7, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,584 | INFO |   transition (employee=7, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,584 | INFO |   transition (employee=7, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,584 | INFO |   transition (employee=7, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,585 | INFO |   transition (employee=7, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,585 | INFO |   transition (employee=7, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,585 | INFO |   transition (employee=7, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,585 | INFO |   transition (employee=7, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,585 | INFO |   transition (employee=7, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,585 | INFO |   transition (employee=7, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,585 | INFO |   transition (employee=7, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,586 | INFO |   transition (employee=7, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,586 | INFO |   transition (employee=7, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,586 | INFO |   transition (employee=7, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,586 | INFO |   transition (employee=7, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,586 | INFO |   transition (employee=7, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,586 | INFO |   transition (employee=8, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,586 | INFO |   transition (employee=8, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,587 | INFO |   transition (employee=8, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,587 | INFO |   transition (employee=8, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,587 | INFO |   transition (employee=8, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,587 | INFO |   transition (employee=8, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,587 | INFO |   transition (employee=8, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,587 | INFO |   transition (employee=8, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,587 | INFO |   transition (employee=8, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,587 | INFO |   transition (employee=8, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,587 | INFO |   transition (employee=8, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,587 | INFO |   transition (employee=8, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,587 | INFO |   transition (employee=8, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,587 | INFO |   transition (employee=8, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,587 | INFO |   transition (employee=8, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,587 | INFO |   transition (employee=8, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,588 | INFO |   transition (employee=8, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,588 | INFO |   transition (employee=8, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,588 | INFO |   transition (employee=9, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,588 | INFO |   transition (employee=9, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,588 | INFO |   transition (employee=9, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,588 | INFO |   transition (employee=9, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,588 | INFO |   transition (employee=9, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,588 | INFO |   transition (employee=9, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,588 | INFO |   transition (employee=9, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,588 | INFO |   transition (employee=9, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,588 | INFO |   transition (employee=9, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,588 | INFO |   transition (employee=9, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,588 | INFO |   transition (employee=9, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,588 | INFO |   transition (employee=9, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,588 | INFO |   transition (employee=9, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,588 | INFO |   transition (employee=9, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,588 | INFO |   transition (employee=9, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,589 | INFO |   transition (employee=9, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,589 | INFO |   transition (employee=9, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,589 | INFO |   transition (employee=9, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,589 | INFO |   transition (employee=10, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,590 | INFO |   transition (employee=10, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,591 | INFO |   transition (employee=10, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,591 | INFO |   transition (employee=10, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,591 | INFO |   transition (employee=10, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,591 | INFO |   transition (employee=10, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,591 | INFO |   transition (employee=10, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,591 | INFO |   transition (employee=10, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,592 | INFO |   transition (employee=10, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,592 | INFO |   transition (employee=10, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,592 | INFO |   transition (employee=10, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,592 | INFO |   transition (employee=10, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,592 | INFO |   transition (employee=10, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,592 | INFO |   transition (employee=10, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,592 | INFO |   transition (employee=10, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,592 | INFO |   transition (employee=10, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,592 | INFO |   transition (employee=10, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,592 | INFO |   transition (employee=10, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,592 | INFO |   transition (employee=1, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,593 | INFO |   transition (employee=1, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,593 | INFO |   transition (employee=1, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,593 | INFO |   transition (employee=1, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,593 | INFO |   transition (employee=1, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,593 | INFO |   transition (employee=1, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,593 | INFO |   transition (employee=1, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,593 | INFO |   transition (employee=1, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,593 | INFO |   transition (employee=1, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,593 | INFO |   transition (employee=1, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,593 | INFO |   transition (employee=1, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,593 | INFO |   transition (employee=1, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,593 | INFO |   transition (employee=1, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,594 | INFO |   transition (employee=1, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,594 | INFO |   transition (employee=1, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,594 | INFO |   transition (employee=1, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,594 | INFO |   transition (employee=1, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,594 | INFO |   transition (employee=1, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,594 | INFO |   transition (employee=2, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,594 | INFO |   transition (employee=2, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,594 | INFO |   transition (employee=2, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,594 | INFO |   transition (employee=2, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,594 | INFO |   transition (employee=2, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,595 | INFO |   transition (employee=2, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,595 | INFO |   transition (employee=2, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,595 | INFO |   transition (employee=2, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,595 | INFO |   transition (employee=2, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,595 | INFO |   transition (employee=2, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,595 | INFO |   transition (employee=2, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,595 | INFO |   transition (employee=2, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,595 | INFO |   transition (employee=2, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,595 | INFO |   transition (employee=2, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,595 | INFO |   transition (employee=2, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,595 | INFO |   transition (employee=2, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,596 | INFO |   transition (employee=2, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,596 | INFO |   transition (employee=2, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,596 | INFO |   transition (employee=3, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,596 | INFO |   transition (employee=3, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,596 | INFO |   transition (employee=3, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,596 | INFO |   transition (employee=3, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,596 | INFO |   transition (employee=3, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,596 | INFO |   transition (employee=3, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,596 | INFO |   transition (employee=3, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,597 | INFO |   transition (employee=3, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,597 | INFO |   transition (employee=3, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,597 | INFO |   transition (employee=3, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,597 | INFO |   transition (employee=3, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,597 | INFO |   transition (employee=3, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,597 | INFO |   transition (employee=3, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,598 | INFO |   transition (employee=3, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,598 | INFO |   transition (employee=3, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,598 | INFO |   transition (employee=3, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,599 | INFO |   transition (employee=3, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,599 | INFO |   transition (employee=3, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,599 | INFO |   transition (employee=4, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,599 | INFO |   transition (employee=4, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,600 | INFO |   transition (employee=4, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,600 | INFO |   transition (employee=4, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,600 | INFO |   transition (employee=4, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,600 | INFO |   transition (employee=4, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,600 | INFO |   transition (employee=4, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,601 | INFO |   transition (employee=4, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,601 | INFO |   transition (employee=4, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,601 | INFO |   transition (employee=4, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,601 | INFO |   transition (employee=4, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,601 | INFO |   transition (employee=4, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,601 | INFO |   transition (employee=4, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,601 | INFO |   transition (employee=4, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,602 | INFO |   transition (employee=4, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,602 | INFO |   transition (employee=4, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,602 | INFO |   transition (employee=4, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,602 | INFO |   transition (employee=4, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,602 | INFO |   transition (employee=5, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,602 | INFO |   transition (employee=5, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,602 | INFO |   transition (employee=5, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,603 | INFO |   transition (employee=5, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,603 | INFO |   transition (employee=5, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,603 | INFO |   transition (employee=5, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,603 | INFO |   transition (employee=5, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,603 | INFO |   transition (employee=5, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,603 | INFO |   transition (employee=5, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,603 | INFO |   transition (employee=5, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,603 | INFO |   transition (employee=5, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,603 | INFO |   transition (employee=5, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,604 | INFO |   transition (employee=5, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,604 | INFO |   transition (employee=5, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,604 | INFO |   transition (employee=5, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,604 | INFO |   transition (employee=5, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,604 | INFO |   transition (employee=5, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,604 | INFO |   transition (employee=5, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,604 | INFO |   transition (employee=6, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,604 | INFO |   transition (employee=6, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,604 | INFO |   transition (employee=6, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,604 | INFO |   transition (employee=6, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,604 | INFO |   transition (employee=6, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,605 | INFO |   transition (employee=6, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,605 | INFO |   transition (employee=6, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,605 | INFO |   transition (employee=6, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,605 | INFO |   transition (employee=6, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,605 | INFO |   transition (employee=6, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,605 | INFO |   transition (employee=6, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,605 | INFO |   transition (employee=6, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,605 | INFO |   transition (employee=6, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,605 | INFO |   transition (employee=6, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,605 | INFO |   transition (employee=6, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,606 | INFO |   transition (employee=6, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,606 | INFO |   transition (employee=6, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,606 | INFO |   transition (employee=6, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,606 | INFO |   transition (employee=7, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,606 | INFO |   transition (employee=7, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,606 | INFO |   transition (employee=7, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,606 | INFO |   transition (employee=7, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,606 | INFO |   transition (employee=7, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,606 | INFO |   transition (employee=7, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,606 | INFO |   transition (employee=7, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,607 | INFO |   transition (employee=7, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,607 | INFO |   transition (employee=7, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,607 | INFO |   transition (employee=7, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,607 | INFO |   transition (employee=7, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,607 | INFO |   transition (employee=7, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,607 | INFO |   transition (employee=7, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,607 | INFO |   transition (employee=7, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,607 | INFO |   transition (employee=7, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,607 | INFO |   transition (employee=7, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,607 | INFO |   transition (employee=7, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,608 | INFO |   transition (employee=7, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,608 | INFO |   transition (employee=8, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,608 | INFO |   transition (employee=8, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,608 | INFO |   transition (employee=8, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,608 | INFO |   transition (employee=8, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,608 | INFO |   transition (employee=8, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,608 | INFO |   transition (employee=8, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,608 | INFO |   transition (employee=8, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,608 | INFO |   transition (employee=8, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,608 | INFO |   transition (employee=8, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,608 | INFO |   transition (employee=8, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,608 | INFO |   transition (employee=8, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,608 | INFO |   transition (employee=8, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,609 | INFO |   transition (employee=8, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,609 | INFO |   transition (employee=8, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,609 | INFO |   transition (employee=8, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,609 | INFO |   transition (employee=8, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,609 | INFO |   transition (employee=8, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,609 | INFO |   transition (employee=8, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,609 | INFO |   transition (employee=9, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,609 | INFO |   transition (employee=9, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,609 | INFO |   transition (employee=9, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,609 | INFO |   transition (employee=9, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,609 | INFO |   transition (employee=9, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,609 | INFO |   transition (employee=9, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,609 | INFO |   transition (employee=9, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,609 | INFO |   transition (employee=9, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,610 | INFO |   transition (employee=9, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,610 | INFO |   transition (employee=9, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,610 | INFO |   transition (employee=9, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,610 | INFO |   transition (employee=9, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,610 | INFO |   transition (employee=9, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,610 | INFO |   transition (employee=9, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,610 | INFO |   transition (employee=9, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,610 | INFO |   transition (employee=9, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,610 | INFO |   transition (employee=9, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,610 | INFO |   transition (employee=9, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,610 | INFO |   transition (employee=10, day=0) fulfilled, gain=4
+2026-08-24 09:45:19,610 | INFO |   transition (employee=10, day=1) fulfilled, gain=4
+2026-08-24 09:45:19,611 | INFO |   transition (employee=10, day=2) fulfilled, gain=4
+2026-08-24 09:45:19,611 | INFO |   transition (employee=10, day=3) fulfilled, gain=4
+2026-08-24 09:45:19,611 | INFO |   transition (employee=10, day=4) fulfilled, gain=4
+2026-08-24 09:45:19,611 | INFO |   transition (employee=10, day=5) fulfilled, gain=4
+2026-08-24 09:45:19,611 | INFO |   transition (employee=10, day=6) fulfilled, gain=4
+2026-08-24 09:45:19,611 | INFO |   transition (employee=10, day=7) fulfilled, gain=4
+2026-08-24 09:45:19,611 | INFO |   transition (employee=10, day=8) fulfilled, gain=4
+2026-08-24 09:45:19,611 | INFO |   transition (employee=10, day=9) fulfilled, gain=4
+2026-08-24 09:45:19,611 | INFO |   transition (employee=10, day=10) fulfilled, gain=4
+2026-08-24 09:45:19,611 | INFO |   transition (employee=10, day=11) fulfilled, gain=4
+2026-08-24 09:45:19,611 | INFO |   transition (employee=10, day=12) fulfilled, gain=4
+2026-08-24 09:45:19,611 | INFO |   transition (employee=10, day=13) fulfilled, gain=4
+2026-08-24 09:45:19,612 | INFO |   transition (employee=10, day=14) fulfilled, gain=4
+2026-08-24 09:45:19,612 | INFO |   transition (employee=10, day=15) fulfilled, gain=4
+2026-08-24 09:45:19,612 | INFO |   transition (employee=10, day=16) fulfilled, gain=4
+2026-08-24 09:45:19,612 | INFO |   transition (employee=10, day=17) fulfilled, gain=4
+2026-08-24 09:45:19,613 | INFO | Solver response stats:
+CpSolverResponse summary:
+status: OPTIMAL
+objective: -2160
+best_bound: -2160
+integers: 575
+booleans: 574
+conflicts: 203
+branches: 3897
+propagations: 5652
+integer_propagations: 7258
+restarts: 3
+lp_iterations: 0
+walltime: 0.112287
+usertime: 0.112287
+deterministic_time: 0.0116972
+gap_integral: 0
+solution_fingerprint: 0x1cacb8632fd3e67e

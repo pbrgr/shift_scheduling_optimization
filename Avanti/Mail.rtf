@@ -1,0 +1,104 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2870
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 TrebuchetMS;\f1\fnil\fcharset0 HelveticaNeue;}
+{\colortbl;\red255\green255\blue255;\red13\green29\blue50;\red255\green255\blue255;\red56\green101\blue115;
+}
+{\*\expandedcolortbl;;\cssrgb\c5490\c15686\c25490;\cssrgb\c100000\c100000\c100000;\cssrgb\c27451\c47059\c52549;
+}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}}{\leveltext\leveltemplateid101\'01\'00;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid2}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs20 \cf2 \cb3 \expnd0\expndtw0\kerning0
+Sal\'fc Patrik
+\f1\fs24 \cf0 \cb1 \
+
+\f0\fs20 \cf2 \cb3 \'a0
+\f1\fs24 \cf0 \cb1 \
+
+\f0\fs20 \cf2 \cb3 Wie gew\'fcnscht habe ich dir 2 Beispiele aufbereitet (DPAutoGen-1 und DPAutoGen2). In den Zip-Files findest du die Screenshots der Dienstplan-Applikation (vorher/nachher) sowie Input und Output vom Skript. Das Skript selbst ist eine von mir modifizierte Version. Ich habe die Integration zum Dienstplan implementiert (zum Kontext: Python habe ich nur sehr selten gemacht und das ist auch \'fcber 10 Jahre her).
+\f1\fs24 \cf0 \cb1 \
+
+\f0\fs20 \cf2 \cb3 \'a0
+\f1\fs24 \cf0 \cb1 \
+
+\f0\fs20 \cf2 \cb3 Ablauf
+\f1\fs24 \cf0 \cb1 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls1\ilvl0
+\f0\fs20 \cf2 \cb3 {\listtext	\uc0\u8226 	}User w\'e4hlt einen Bereich im Dienstplan aus (DPThinClient).
+\f1\fs24 \cb1 \
+\ls1\ilvl0
+\f0\fs20 \cb3 {\listtext	\uc0\u8226 	}Daten zur Selektion werden vom Dienstplan aufbereitet (DPService).
+\f1\fs24 \cb1 \
+\ls1\ilvl0
+\f0\fs20 \cb3 {\listtext	\uc0\u8226 	}Daten werden mit bereits bestehenden Diensten (W\'fcnschen) angereichert (DPService).
+\f1\fs24 \cb1 \
+\ls1\ilvl0
+\f0\fs20 \cb3 {\listtext	\uc0\u8226 	}Alle Daten, welche f\'fcrs generieren ben\'f6tigt werden fliessen ins Python-Skript.
+\f1\fs24 \cb1 \
+\ls1\ilvl0
+\f0\fs20 \cb3 {\listtext	\uc0\u8226 	}Skript generiert Dienste mittels Google OR-Tools (Pyhton).
+\f1\fs24 \cb1 \
+\ls1\ilvl0
+\f0\fs20 \cb3 {\listtext	\uc0\u8226 	}Output fliesst zur\'fcck an DienstPlan.
+\f1\fs24 \cb1 \
+\ls1\ilvl0
+\f0\fs20 \cb3 {\listtext	\uc0\u8226 	}DienstPlan tr\'e4gt dienste ein (nur die Dienste, welche keinen Konflikt verursachen; DPThinClient).
+\f1\fs24 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs20 \cf2 \cb3 \'a0
+\f1\fs24 \cf0 \cb1 \
+
+\f0\fs20 \cf2 \cb3 Im Archiv shift_scheduling_optimization.zip findest du das Programm: wis_main.py. Dieses wird aufgerufen. Es funktioniert wie ein Unix-Filter. WIS ist mein K\'fcrzel bei Avanti. Caitlyn hat das main.py geschrieben.
+\f1\fs24 \cf0 \cb1 \
+
+\f0\fs20 \cf2 \cb3 \'a0
+\f1\fs24 \cf0 \cb1 \
+
+\f0\fs20 \cf2 \cb3 In den Beispielen findest du den Input "Solver-Script-Input.json" welcher per STDIN \'fcbergeben wurde sowie der OUTPUT und ERROROUTPUT (Solver-Script-ErrorOutput.txt und Solver-Script-Output.json). Der OUTPUT wird vom Dienstplan verarbeitet. ERROROUTPUT wird geloggt. Exit-Status zeigt success (0) oder error (>0) an.
+\f1\fs24 \cf0 \cb1 \
+
+\f0\fs20 \cf2 \cb3 \'a0
+\f1\fs24 \cf0 \cb1 \
+
+\f0\fs20 \cf2 \cb3 F\'fcr den ersten Prototypen beim Kunden w\'fcrde ich noch kein UI erstellen. W\'e4hrend der Zusammenarbeit mit dem Kunden wird sich ergeben welche Einstellungen er ben\'f6tigen wird. Als erstes w\'fcrde ich einen einfachen Anwendungsfall wie z.B. die Dienste der Notrufzentrale generieren in TG und evtl. ein zweites Skript f\'fcr Bern.
+\f1\fs24 \cf0 \cb1 \
+
+\f0\fs20 \cf2 \cb3 \'a0
+\f1\fs24 \cf0 \cb1 \
+
+\f0\fs20 \cf2 \cb3 Beim Beispiel DPAutoGen-1 siehst du, dass die Dienste sehr schlecht generiert wurden. Bei DPAutoGen-2 ist es besser.
+\f1\fs24 \cf0 \cb1 \
+
+\f0\fs20 \cf2 \cb3 \'a0
+\f1\fs24 \cf0 \cb1 \
+
+\f0\fs20 \cf2 \cb3 Die Felder "$id" und "@xdata.type" kannst du ignorieren. Die werden in einer k\'fcnftigen Version entfernt werden.
+\f1\fs24 \cf0 \cb1 \
+
+\f0\fs20 \cf2 \cb3 \'a0
+\f1\fs24 \cf0 \cb1 \
+
+\f0\fs20 \cf2 \cb3 Gruss Silvan
+\f1\fs24 \cf0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \cb3 \'a0\cb1 \
+
+\fs22 \cb3 Von: Berger Patrik, SCS-B2B-TBS-TCS-ADC-CE1 <{\field{\*\fldinst{HYPERLINK "mailto:Patrik.Berger@swisscom.com"}}{\fldrslt \cf4 \ul \ulc4 Patrik.Berger@swisscom.com}}> \cb1 \uc0\u8232 \cb3 Gesendet: Dienstag, 18. August 2026 07:57\cb1 \uc0\u8232 \cb3 An: Wicki Silvan, SCS-B2B-TBS-SSP-AVA-DEV <{\field{\*\fldinst{HYPERLINK "mailto:Silvan.Wicki@swisscom.com"}}{\fldrslt \cf4 \ul \ulc4 Silvan.Wicki@swisscom.com}}>\cb1 \uc0\u8232 \cb3 Cc: M\'fcller Alan, SCS-B2B-TBS-SSP-AVA-PJM <{\field{\*\fldinst{HYPERLINK "mailto:Alan.Mueller@swisscom.com"}}{\fldrslt \cf4 \ul \ulc4 Alan.Mueller@swisscom.com}}>; Kolb Samuel, SCS-B2B-TBS-BAP-BD <{\field{\*\fldinst{HYPERLINK "mailto:Samuel.Kolb@swisscom.com"}}{\fldrslt \cf4 \ul \ulc4 Samuel.Kolb@swisscom.com}}>\cb1 \uc0\u8232 \cb3 Betreff: Automatisierte Dienstplanung in Avanti
+\fs24 \cb1 \
+\cb3 \'a0\cb1 \
+\pard\pardeftab720\sa320\partightenfactor0
+\cf0 \cb3 Lieber Silvan\cb1 \
+\cb3 Wie letzte Woche besprochen, melde ich mich nochmals bez\'fcglich der automatisierten Dienstplanung in Avanti. Danke nochmals f\'fcr den spannenden Austausch.\cb1 \
+\cb3 Damit ich den aktuellen Stand und die n\'e4chsten Schritte f\'fcr einen kundenf\'e4higen Prototyp besser verstehe, h\'e4tte ich noch drei kurze Fragen:\cb1 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls2\ilvl0\cf0 \cb3 {\listtext	1	}K\'f6nntest du mir ein oder zwei Beispiele der JSON-Files schicken, die im aktuellen Prototyp als Input und Output verwendet werden?\cb1 \
+\ls2\ilvl0\cb3 {\listtext	2	}K\'f6nntest du mir kurz den Workflow des aktuellen Prototyps erkl\'e4ren? Mich w\'fcrde insbesondere interessieren, wie die Daten aus Avanti an den Solver gelangen, wo die Optimierung ausgef\'fchrt wird und wie der erzeugte Dienstplan anschliessend wieder in Avanti \'fcbernommen und dargestellt wird.\cb1 \
+\ls2\ilvl0\cb3 {\listtext	3	}K\'f6nnte f\'fcr einen kundenf\'e4higen Prototyp grunds\'e4tzlich auf dem bestehenden L\'f6sungsdesign aufgebaut werden? Oder m\'fcsste daf\'fcr in Avanti zus\'e4tzlich ein User Interface entwickelt werden, \'fcber das die Kunden ihre Planungsparameter und Constraints eingeben k\'f6nnen?\cb1 \
+\pard\pardeftab720\sa320\partightenfactor0
+\cf0 \cb3 Vielen Dank f\'fcr deine Unterst\'fctzung!\cb1 \
+\cb3 Liebe Gr\'fcsse\cb1 \uc0\u8232 \cb3 Patrik}

@@ -1,9 +1,11 @@
 from ortools.sat.python import cp_model
 
+from src.core.metrics import compute_metrics, summary_lines
 from src.core.model import ScheduleModel, build_model
 from src.infrastructure.config import DEFAULT_CONFIG, ScheduleConfig
 from src.infrastructure.csv_writer import get_assigned_shift_name, write_schedule_csv
 from src.infrastructure.logger import setup_logging
+from src.infrastructure.report import write_report
 
 OUTPUT_PATH = "output"
 
@@ -25,13 +27,19 @@ def log_configuration(logger, config: ScheduleConfig) -> None:
     logger.info("Fair shifts per employee: %d to %d", fair_min, fair_max)
 
 
-def log_schedule(logger, solver, sm: ScheduleModel, config: ScheduleConfig) -> None:
-    for e in config.employees:
-        schedule = " ".join(
+def extract_schedule(solver, sm: ScheduleModel, config: ScheduleConfig) -> dict:
+    return {
+        e: [
             get_assigned_shift_name(solver, sm.work, e, d, config.shifts)
             for d in range(config.num_days)
-        )
-        logger.info("worker %s: %s", e, schedule)
+        ]
+        for e in config.employees
+    }
+
+
+def log_schedule(logger, schedule: dict) -> None:
+    for e, days in schedule.items():
+        logger.info("worker %s: %s", e, " ".join(days))
 
 
 def log_objective_terms(logger, solver, sm: ScheduleModel) -> None:
@@ -93,8 +101,25 @@ def generate_schedule(
         )
 
     csv_path = write_schedule_csv(output_path, solver, sm.work, config)
-    log_schedule(logger, solver, sm, config)
+    schedule = extract_schedule(solver, sm, config)
+    log_schedule(logger, schedule)
     logger.info("Schedule CSV written to %s", csv_path)
+
+    metrics = compute_metrics(schedule, config)
+    logger.info("Quality metrics:")
+    for line in summary_lines(metrics, config):
+        logger.info("  %s", line)
+
+    report_path = write_report(
+        output_path,
+        schedule=schedule,
+        config=config,
+        metrics=metrics,
+        solver_status=solver.StatusName(status),
+        objective=solver.objective_value,
+        gap=solver.best_objective_bound - solver.objective_value,
+    )
+    logger.info("HTML report written to %s", report_path)
 
     log_objective_terms(logger, solver, sm)
     logger.info("Solver response stats:\n%s", solver.response_stats())

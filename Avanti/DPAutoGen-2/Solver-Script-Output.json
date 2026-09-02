@@ -1,0 +1,1148 @@
+{
+    "version": "1",
+    "solver": {
+        "status": "OPTIMAL"
+    },
+    "dienstEinteilungen": [
+        {
+            "pofID": "4A####LM2S##1XO",
+            "pofCode": "QHIJ",
+            "zeitStart": "2026-10-05",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "4A####LM2S##1XO",
+            "pofCode": "QHIJ",
+            "zeitStart": "2026-10-06",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "4A####LM2S##1XO",
+            "pofCode": "QHIJ",
+            "zeitStart": "2026-10-07",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "4A####LM2S##1XO",
+            "pofCode": "QHIJ",
+            "zeitStart": "2026-10-08",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "4A####LM2S##1XO",
+            "pofCode": "QHIJ",
+            "zeitStart": "2026-10-09",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "4A####LM2S##1XO",
+            "pofCode": "QHIJ",
+            "zeitStart": "2026-10-10",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "4A####LM2S##1XO",
+            "pofCode": "QHIJ",
+            "zeitStart": "2026-10-11",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "4A####LM2S##1XO",
+            "pofCode": "QHIJ",
+            "zeitStart": "2026-10-12",
+            "needtochange1": "R"
+        },
+        {
+            "pofID": "4A####LM2S##1XO",
+            "pofCode": "QHIJ",
+            "zeitStart": "2026-10-13",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "4A####LM2S##1XO",
+            "pofCode": "QHIJ",
+            "zeitStart": "2026-10-14",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "4A####LM2S##1XO",
+            "pofCode": "QHIJ",
+            "zeitStart": "2026-10-15",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "4A####LM2S##1XO",
+            "pofCode": "QHIJ",
+            "zeitStart": "2026-10-16",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "4A####LM2S##1XO",
+            "pofCode": "QHIJ",
+            "zeitStart": "2026-10-17",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "4A####LM2S##1XO",
+            "pofCode": "QHIJ",
+            "zeitStart": "2026-10-18",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "4A####LM2S##1XO",
+            "pofCode": "QHIJ",
+            "zeitStart": "2026-10-19",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "4A####LM2S##1XO",
+            "pofCode": "QHIJ",
+            "zeitStart": "2026-10-20",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "4A####LM2S##1XO",
+            "pofCode": "QHIJ",
+            "zeitStart": "2026-10-21",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "4A####LM2S##1XO",
+            "pofCode": "QHIJ",
+            "zeitStart": "2026-10-22",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "4A####LM2S##1XO",
+            "pofCode": "QHIJ",
+            "zeitStart": "2026-10-23",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "11H###LM66##1XO",
+            "pofCode": "QGEB",
+            "zeitStart": "2026-10-05",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "11H###LM66##1XO",
+            "pofCode": "QGEB",
+            "zeitStart": "2026-10-06",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "11H###LM66##1XO",
+            "pofCode": "QGEB",
+            "zeitStart": "2026-10-07",
+            "needtochange1": "R"
+        },
+        {
+            "pofID": "11H###LM66##1XO",
+            "pofCode": "QGEB",
+            "zeitStart": "2026-10-08",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "11H###LM66##1XO",
+            "pofCode": "QGEB",
+            "zeitStart": "2026-10-09",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "11H###LM66##1XO",
+            "pofCode": "QGEB",
+            "zeitStart": "2026-10-10",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "11H###LM66##1XO",
+            "pofCode": "QGEB",
+            "zeitStart": "2026-10-11",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "11H###LM66##1XO",
+            "pofCode": "QGEB",
+            "zeitStart": "2026-10-12",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "11H###LM66##1XO",
+            "pofCode": "QGEB",
+            "zeitStart": "2026-10-13",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "11H###LM66##1XO",
+            "pofCode": "QGEB",
+            "zeitStart": "2026-10-14",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "11H###LM66##1XO",
+            "pofCode": "QGEB",
+            "zeitStart": "2026-10-15",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "11H###LM66##1XO",
+            "pofCode": "QGEB",
+            "zeitStart": "2026-10-16",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "11H###LM66##1XO",
+            "pofCode": "QGEB",
+            "zeitStart": "2026-10-17",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "11H###LM66##1XO",
+            "pofCode": "QGEB",
+            "zeitStart": "2026-10-18",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "11H###LM66##1XO",
+            "pofCode": "QGEB",
+            "zeitStart": "2026-10-19",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "11H###LM66##1XO",
+            "pofCode": "QGEB",
+            "zeitStart": "2026-10-20",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "11H###LM66##1XO",
+            "pofCode": "QGEB",
+            "zeitStart": "2026-10-21",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "11H###LM66##1XO",
+            "pofCode": "QGEB",
+            "zeitStart": "2026-10-22",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "11H###LM66##1XO",
+            "pofCode": "QGEB",
+            "zeitStart": "2026-10-23",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "F8B820C485011XO",
+            "pofCode": "PMFU",
+            "zeitStart": "2026-10-05",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "F8B820C485011XO",
+            "pofCode": "PMFU",
+            "zeitStart": "2026-10-06",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "F8B820C485011XO",
+            "pofCode": "PMFU",
+            "zeitStart": "2026-10-07",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "F8B820C485011XO",
+            "pofCode": "PMFU",
+            "zeitStart": "2026-10-08",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "F8B820C485011XO",
+            "pofCode": "PMFU",
+            "zeitStart": "2026-10-09",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "F8B820C485011XO",
+            "pofCode": "PMFU",
+            "zeitStart": "2026-10-10",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "F8B820C485011XO",
+            "pofCode": "PMFU",
+            "zeitStart": "2026-10-11",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "F8B820C485011XO",
+            "pofCode": "PMFU",
+            "zeitStart": "2026-10-12",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "F8B820C485011XO",
+            "pofCode": "PMFU",
+            "zeitStart": "2026-10-13",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "F8B820C485011XO",
+            "pofCode": "PMFU",
+            "zeitStart": "2026-10-14",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "F8B820C485011XO",
+            "pofCode": "PMFU",
+            "zeitStart": "2026-10-15",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "F8B820C485011XO",
+            "pofCode": "PMFU",
+            "zeitStart": "2026-10-16",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "F8B820C485011XO",
+            "pofCode": "PMFU",
+            "zeitStart": "2026-10-17",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "F8B820C485011XO",
+            "pofCode": "PMFU",
+            "zeitStart": "2026-10-18",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "F8B820C485011XO",
+            "pofCode": "PMFU",
+            "zeitStart": "2026-10-19",
+            "needtochange1": "R"
+        },
+        {
+            "pofID": "F8B820C485011XO",
+            "pofCode": "PMFU",
+            "zeitStart": "2026-10-20",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "F8B820C485011XO",
+            "pofCode": "PMFU",
+            "zeitStart": "2026-10-21",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "F8B820C485011XO",
+            "pofCode": "PMFU",
+            "zeitStart": "2026-10-22",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "F8B820C485011XO",
+            "pofCode": "PMFU",
+            "zeitStart": "2026-10-23",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "4I####2DQW3#1XM",
+            "pofCode": null,
+            "zeitStart": "2026-10-05",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "4I####2DQW3#1XM",
+            "pofCode": null,
+            "zeitStart": "2026-10-06",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "4I####2DQW3#1XM",
+            "pofCode": null,
+            "zeitStart": "2026-10-07",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "4I####2DQW3#1XM",
+            "pofCode": null,
+            "zeitStart": "2026-10-08",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "4I####2DQW3#1XM",
+            "pofCode": null,
+            "zeitStart": "2026-10-09",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "4I####2DQW3#1XM",
+            "pofCode": null,
+            "zeitStart": "2026-10-10",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "4I####2DQW3#1XM",
+            "pofCode": null,
+            "zeitStart": "2026-10-11",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "4I####2DQW3#1XM",
+            "pofCode": null,
+            "zeitStart": "2026-10-12",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "4I####2DQW3#1XM",
+            "pofCode": null,
+            "zeitStart": "2026-10-13",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "4I####2DQW3#1XM",
+            "pofCode": null,
+            "zeitStart": "2026-10-14",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "4I####2DQW3#1XM",
+            "pofCode": null,
+            "zeitStart": "2026-10-15",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "4I####2DQW3#1XM",
+            "pofCode": null,
+            "zeitStart": "2026-10-16",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "4I####2DQW3#1XM",
+            "pofCode": null,
+            "zeitStart": "2026-10-17",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "4I####2DQW3#1XM",
+            "pofCode": null,
+            "zeitStart": "2026-10-18",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "4I####2DQW3#1XM",
+            "pofCode": null,
+            "zeitStart": "2026-10-19",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "4I####2DQW3#1XM",
+            "pofCode": null,
+            "zeitStart": "2026-10-20",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "4I####2DQW3#1XM",
+            "pofCode": null,
+            "zeitStart": "2026-10-21",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "4I####2DQW3#1XM",
+            "pofCode": null,
+            "zeitStart": "2026-10-22",
+            "needtochange1": "R"
+        },
+        {
+            "pofID": "4I####2DQW3#1XM",
+            "pofCode": null,
+            "zeitStart": "2026-10-23",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "HGrsU8o]370_1XO",
+            "pofCode": "AVANTI",
+            "zeitStart": "2026-10-05",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "HGrsU8o]370_1XO",
+            "pofCode": "AVANTI",
+            "zeitStart": "2026-10-06",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "HGrsU8o]370_1XO",
+            "pofCode": "AVANTI",
+            "zeitStart": "2026-10-07",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "HGrsU8o]370_1XO",
+            "pofCode": "AVANTI",
+            "zeitStart": "2026-10-08",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "HGrsU8o]370_1XO",
+            "pofCode": "AVANTI",
+            "zeitStart": "2026-10-09",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "HGrsU8o]370_1XO",
+            "pofCode": "AVANTI",
+            "zeitStart": "2026-10-10",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "HGrsU8o]370_1XO",
+            "pofCode": "AVANTI",
+            "zeitStart": "2026-10-11",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "HGrsU8o]370_1XO",
+            "pofCode": "AVANTI",
+            "zeitStart": "2026-10-12",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "HGrsU8o]370_1XO",
+            "pofCode": "AVANTI",
+            "zeitStart": "2026-10-13",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "HGrsU8o]370_1XO",
+            "pofCode": "AVANTI",
+            "zeitStart": "2026-10-14",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "HGrsU8o]370_1XO",
+            "pofCode": "AVANTI",
+            "zeitStart": "2026-10-15",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "HGrsU8o]370_1XO",
+            "pofCode": "AVANTI",
+            "zeitStart": "2026-10-16",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "HGrsU8o]370_1XO",
+            "pofCode": "AVANTI",
+            "zeitStart": "2026-10-17",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "HGrsU8o]370_1XO",
+            "pofCode": "AVANTI",
+            "zeitStart": "2026-10-18",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "HGrsU8o]370_1XO",
+            "pofCode": "AVANTI",
+            "zeitStart": "2026-10-19",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "HGrsU8o]370_1XO",
+            "pofCode": "AVANTI",
+            "zeitStart": "2026-10-20",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "HGrsU8o]370_1XO",
+            "pofCode": "AVANTI",
+            "zeitStart": "2026-10-21",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "HGrsU8o]370_1XO",
+            "pofCode": "AVANTI",
+            "zeitStart": "2026-10-22",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "HGrsU8o]370_1XO",
+            "pofCode": "AVANTI",
+            "zeitStart": "2026-10-23",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "FfekLLpFP00_1XO",
+            "pofCode": "TAAWISI8",
+            "zeitStart": "2026-10-05",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "FfekLLpFP00_1XO",
+            "pofCode": "TAAWISI8",
+            "zeitStart": "2026-10-06",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "FfekLLpFP00_1XO",
+            "pofCode": "TAAWISI8",
+            "zeitStart": "2026-10-07",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "FfekLLpFP00_1XO",
+            "pofCode": "TAAWISI8",
+            "zeitStart": "2026-10-08",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "FfekLLpFP00_1XO",
+            "pofCode": "TAAWISI8",
+            "zeitStart": "2026-10-09",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "FfekLLpFP00_1XO",
+            "pofCode": "TAAWISI8",
+            "zeitStart": "2026-10-10",
+            "needtochange1": "R"
+        },
+        {
+            "pofID": "FfekLLpFP00_1XO",
+            "pofCode": "TAAWISI8",
+            "zeitStart": "2026-10-11",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "FfekLLpFP00_1XO",
+            "pofCode": "TAAWISI8",
+            "zeitStart": "2026-10-12",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "FfekLLpFP00_1XO",
+            "pofCode": "TAAWISI8",
+            "zeitStart": "2026-10-13",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "FfekLLpFP00_1XO",
+            "pofCode": "TAAWISI8",
+            "zeitStart": "2026-10-14",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "FfekLLpFP00_1XO",
+            "pofCode": "TAAWISI8",
+            "zeitStart": "2026-10-15",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "FfekLLpFP00_1XO",
+            "pofCode": "TAAWISI8",
+            "zeitStart": "2026-10-16",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "FfekLLpFP00_1XO",
+            "pofCode": "TAAWISI8",
+            "zeitStart": "2026-10-17",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "FfekLLpFP00_1XO",
+            "pofCode": "TAAWISI8",
+            "zeitStart": "2026-10-18",
+            "needtochange1": "R"
+        },
+        {
+            "pofID": "FfekLLpFP00_1XO",
+            "pofCode": "TAAWISI8",
+            "zeitStart": "2026-10-19",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "FfekLLpFP00_1XO",
+            "pofCode": "TAAWISI8",
+            "zeitStart": "2026-10-20",
+            "needtochange1": "R"
+        },
+        {
+            "pofID": "FfekLLpFP00_1XO",
+            "pofCode": "TAAWISI8",
+            "zeitStart": "2026-10-21",
+            "needtochange1": "R"
+        },
+        {
+            "pofID": "FfekLLpFP00_1XO",
+            "pofCode": "TAAWISI8",
+            "zeitStart": "2026-10-22",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "FfekLLpFP00_1XO",
+            "pofCode": "TAAWISI8",
+            "zeitStart": "2026-10-23",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "8sRYeMY5yW0_1XO",
+            "pofCode": "DP_Mitar",
+            "zeitStart": "2026-10-05",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "8sRYeMY5yW0_1XO",
+            "pofCode": "DP_Mitar",
+            "zeitStart": "2026-10-06",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "8sRYeMY5yW0_1XO",
+            "pofCode": "DP_Mitar",
+            "zeitStart": "2026-10-07",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "8sRYeMY5yW0_1XO",
+            "pofCode": "DP_Mitar",
+            "zeitStart": "2026-10-08",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "8sRYeMY5yW0_1XO",
+            "pofCode": "DP_Mitar",
+            "zeitStart": "2026-10-09",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "8sRYeMY5yW0_1XO",
+            "pofCode": "DP_Mitar",
+            "zeitStart": "2026-10-10",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "8sRYeMY5yW0_1XO",
+            "pofCode": "DP_Mitar",
+            "zeitStart": "2026-10-11",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "8sRYeMY5yW0_1XO",
+            "pofCode": "DP_Mitar",
+            "zeitStart": "2026-10-12",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "8sRYeMY5yW0_1XO",
+            "pofCode": "DP_Mitar",
+            "zeitStart": "2026-10-13",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "8sRYeMY5yW0_1XO",
+            "pofCode": "DP_Mitar",
+            "zeitStart": "2026-10-14",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "8sRYeMY5yW0_1XO",
+            "pofCode": "DP_Mitar",
+            "zeitStart": "2026-10-15",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "8sRYeMY5yW0_1XO",
+            "pofCode": "DP_Mitar",
+            "zeitStart": "2026-10-16",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "8sRYeMY5yW0_1XO",
+            "pofCode": "DP_Mitar",
+            "zeitStart": "2026-10-17",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "8sRYeMY5yW0_1XO",
+            "pofCode": "DP_Mitar",
+            "zeitStart": "2026-10-18",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "8sRYeMY5yW0_1XO",
+            "pofCode": "DP_Mitar",
+            "zeitStart": "2026-10-19",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "8sRYeMY5yW0_1XO",
+            "pofCode": "DP_Mitar",
+            "zeitStart": "2026-10-20",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "8sRYeMY5yW0_1XO",
+            "pofCode": "DP_Mitar",
+            "zeitStart": "2026-10-21",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "8sRYeMY5yW0_1XO",
+            "pofCode": "DP_Mitar",
+            "zeitStart": "2026-10-22",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "8sRYeMY5yW0_1XO",
+            "pofCode": "DP_Mitar",
+            "zeitStart": "2026-10-23",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "S#####2DQPV#1XO",
+            "pofCode": "PMBG",
+            "zeitStart": "2026-10-05",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "S#####2DQPV#1XO",
+            "pofCode": "PMBG",
+            "zeitStart": "2026-10-06",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "S#####2DQPV#1XO",
+            "pofCode": "PMBG",
+            "zeitStart": "2026-10-07",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "S#####2DQPV#1XO",
+            "pofCode": "PMBG",
+            "zeitStart": "2026-10-08",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "S#####2DQPV#1XO",
+            "pofCode": "PMBG",
+            "zeitStart": "2026-10-09",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "S#####2DQPV#1XO",
+            "pofCode": "PMBG",
+            "zeitStart": "2026-10-10",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "S#####2DQPV#1XO",
+            "pofCode": "PMBG",
+            "zeitStart": "2026-10-11",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "S#####2DQPV#1XO",
+            "pofCode": "PMBG",
+            "zeitStart": "2026-10-12",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "S#####2DQPV#1XO",
+            "pofCode": "PMBG",
+            "zeitStart": "2026-10-13",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "S#####2DQPV#1XO",
+            "pofCode": "PMBG",
+            "zeitStart": "2026-10-14",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "S#####2DQPV#1XO",
+            "pofCode": "PMBG",
+            "zeitStart": "2026-10-15",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "S#####2DQPV#1XO",
+            "pofCode": "PMBG",
+            "zeitStart": "2026-10-16",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "S#####2DQPV#1XO",
+            "pofCode": "PMBG",
+            "zeitStart": "2026-10-17",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "S#####2DQPV#1XO",
+            "pofCode": "PMBG",
+            "zeitStart": "2026-10-18",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "S#####2DQPV#1XO",
+            "pofCode": "PMBG",
+            "zeitStart": "2026-10-19",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "S#####2DQPV#1XO",
+            "pofCode": "PMBG",
+            "zeitStart": "2026-10-20",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "S#####2DQPV#1XO",
+            "pofCode": "PMBG",
+            "zeitStart": "2026-10-21",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "S#####2DQPV#1XO",
+            "pofCode": "PMBG",
+            "zeitStart": "2026-10-22",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "S#####2DQPV#1XO",
+            "pofCode": "PMBG",
+            "zeitStart": "2026-10-23",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "G9####LLSF##1XO",
+            "pofCode": "PBYN",
+            "zeitStart": "2026-10-05",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "G9####LLSF##1XO",
+            "pofCode": "PBYN",
+            "zeitStart": "2026-10-06",
+            "needtochange1": "R"
+        },
+        {
+            "pofID": "G9####LLSF##1XO",
+            "pofCode": "PBYN",
+            "zeitStart": "2026-10-07",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "G9####LLSF##1XO",
+            "pofCode": "PBYN",
+            "zeitStart": "2026-10-08",
+            "needtochange1": "R"
+        },
+        {
+            "pofID": "G9####LLSF##1XO",
+            "pofCode": "PBYN",
+            "zeitStart": "2026-10-09",
+            "needtochange1": "R"
+        },
+        {
+            "pofID": "G9####LLSF##1XO",
+            "pofCode": "PBYN",
+            "zeitStart": "2026-10-10",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "G9####LLSF##1XO",
+            "pofCode": "PBYN",
+            "zeitStart": "2026-10-11",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "G9####LLSF##1XO",
+            "pofCode": "PBYN",
+            "zeitStart": "2026-10-12",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "G9####LLSF##1XO",
+            "pofCode": "PBYN",
+            "zeitStart": "2026-10-13",
+            "needtochange1": "R"
+        },
+        {
+            "pofID": "G9####LLSF##1XO",
+            "pofCode": "PBYN",
+            "zeitStart": "2026-10-14",
+            "needtochange1": "R"
+        },
+        {
+            "pofID": "G9####LLSF##1XO",
+            "pofCode": "PBYN",
+            "zeitStart": "2026-10-15",
+            "needtochange1": "R"
+        },
+        {
+            "pofID": "G9####LLSF##1XO",
+            "pofCode": "PBYN",
+            "zeitStart": "2026-10-16",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "G9####LLSF##1XO",
+            "pofCode": "PBYN",
+            "zeitStart": "2026-10-17",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "G9####LLSF##1XO",
+            "pofCode": "PBYN",
+            "zeitStart": "2026-10-18",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "G9####LLSF##1XO",
+            "pofCode": "PBYN",
+            "zeitStart": "2026-10-19",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "G9####LLSF##1XO",
+            "pofCode": "PBYN",
+            "zeitStart": "2026-10-20",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "G9####LLSF##1XO",
+            "pofCode": "PBYN",
+            "zeitStart": "2026-10-21",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "G9####LLSF##1XO",
+            "pofCode": "PBYN",
+            "zeitStart": "2026-10-22",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "G9####LLSF##1XO",
+            "pofCode": "PBYN",
+            "zeitStart": "2026-10-23",
+            "needtochange1": "R"
+        },
+        {
+            "pofID": "EV####LIVH##1XO",
+            "pofCode": "PHNK",
+            "zeitStart": "2026-10-05",
+            "needtochange1": "R"
+        },
+        {
+            "pofID": "EV####LIVH##1XO",
+            "pofCode": "PHNK",
+            "zeitStart": "2026-10-06",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "EV####LIVH##1XO",
+            "pofCode": "PHNK",
+            "zeitStart": "2026-10-07",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "EV####LIVH##1XO",
+            "pofCode": "PHNK",
+            "zeitStart": "2026-10-08",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "EV####LIVH##1XO",
+            "pofCode": "PHNK",
+            "zeitStart": "2026-10-09",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "EV####LIVH##1XO",
+            "pofCode": "PHNK",
+            "zeitStart": "2026-10-10",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "EV####LIVH##1XO",
+            "pofCode": "PHNK",
+            "zeitStart": "2026-10-11",
+            "needtochange1": "R"
+        },
+        {
+            "pofID": "EV####LIVH##1XO",
+            "pofCode": "PHNK",
+            "zeitStart": "2026-10-12",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "EV####LIVH##1XO",
+            "pofCode": "PHNK",
+            "zeitStart": "2026-10-13",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "EV####LIVH##1XO",
+            "pofCode": "PHNK",
+            "zeitStart": "2026-10-14",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "EV####LIVH##1XO",
+            "pofCode": "PHNK",
+            "zeitStart": "2026-10-15",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "EV####LIVH##1XO",
+            "pofCode": "PHNK",
+            "zeitStart": "2026-10-16",
+            "needtochange1": "R"
+        },
+        {
+            "pofID": "EV####LIVH##1XO",
+            "pofCode": "PHNK",
+            "zeitStart": "2026-10-17",
+            "needtochange1": "R"
+        },
+        {
+            "pofID": "EV####LIVH##1XO",
+            "pofCode": "PHNK",
+            "zeitStart": "2026-10-18",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "EV####LIVH##1XO",
+            "pofCode": "PHNK",
+            "zeitStart": "2026-10-19",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "EV####LIVH##1XO",
+            "pofCode": "PHNK",
+            "zeitStart": "2026-10-20",
+            "needtochange1": "2N"
+        },
+        {
+            "pofID": "EV####LIVH##1XO",
+            "pofCode": "PHNK",
+            "zeitStart": "2026-10-21",
+            "needtochange1": "1N"
+        },
+        {
+            "pofID": "EV####LIVH##1XO",
+            "pofCode": "PHNK",
+            "zeitStart": "2026-10-22",
+            "needtochange1": "3N"
+        },
+        {
+            "pofID": "EV####LIVH##1XO",
+            "pofCode": "PHNK",
+            "zeitStart": "2026-10-23",
+            "needtochange1": "3N"
+        }
+    ]
+}

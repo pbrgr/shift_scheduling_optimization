@@ -15,8 +15,14 @@ pip install -r requirements.txt
 python -m src.app.generate_schedule
 ```
 
-Run from the repository root. The result is written to `output/schedule.csv`,
-the run log to `output/logs/run_<timestamp>.log`.
+Run from the repository root. Each run writes to `output/`:
+
+- `schedule.csv` — the raw schedule matrix
+- `report.html` — quality stat tiles, the schedule as a colored roster grid
+  (employees x days, weekend columns marked) and a per-employee table; opens
+  directly from the file system, light and dark mode
+- `logs/run_<timestamp>.log` — the run log, including the same quality metrics
+  (coverage, fairness spreads, transition counts, fulfilled requests)
 
 Tests run against small configs that solve in milliseconds. Besides the
 constraints they recompute the objective from the finished schedule and compare
