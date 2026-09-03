@@ -59,6 +59,17 @@ days, Pikett, ...) block the day. The rule set — coverage, weights,
 transitions, the KNZ shift system — comes from a `ScheduleConfig` template,
 not from the payload.
 
+`src/infrastructure/avanti_generator.py` generates realistic payloads in the
+same structure — a dense month with vacation blocks, education days, office
+days, part-time pensums and wishes in every workflow state, plus a company
+and a system account so the filtering is exercised. Seeded, so runs are
+reproducible:
+
+```bash
+python -m src.infrastructure.avanti_generator --seed 42 > input.json
+python -m src.app.avanti_filter < input.json > output.json
+```
+
 The reader touches only the fields it needs and fails loudly on anything
 missing, so a payload format change surfaces as a clear error instead of a
 wrong plan. Output entries carry `pofID`, `dienstCodeID` and `zeitStart`
