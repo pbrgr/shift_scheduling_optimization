@@ -45,17 +45,32 @@ ENTRY_TIMES = {"1N": "06:00", "2N": "11:30", "3N": "18:00", "R": "00:00",
                **FOREIGN_CODES}
 
 
+OTHER_SKILLS = ["Führerausweis C1", "Fremdsprache: Französisch", "TK-Pool"]
+
+
 def _resource(number: int, rng: random.Random) -> dict:
     first = FIRST_NAMES[number % len(FIRST_NAMES)]
     last = LAST_NAMES[number % len(LAST_NAMES)]
     #most people are full-time, some work part-time
     pensum = 100 if rng.random() < 0.7 else rng.choice([50, 60, 80, 90])
+
+    #a couple of shift leaders (both priorities), mixed with unrelated
+    #skills, in the same comma-string format Avanti delivers
+    skills = rng.sample(OTHER_SKILLS, k=rng.randint(0, 2))
+    roll = rng.random()
+    if roll < 0.15:
+        skills.append("Schichtleiter")
+    elif roll < 0.25:
+        skills.append("Schichtleiter Stv")
+    rng.shuffle(skills)
+
     return {
         "pofID": f"GEN{number:03d}_1XO",
         "pofCode": f"T{first[0]}{last[0]}{number:02d}",
         "pofName": last, "pofVorname": first,
         "pofTyp": "P", "pofIstMitarbeiter": True, "pofDeaktiviert": "0",
-        "beschaeftigungsgrad": str(pensum), "pofListeFaehigkeiten": None,
+        "beschaeftigungsgrad": str(pensum),
+        "pofListeFaehigkeiten": ", ".join(skills) if skills else None,
     }
 
 

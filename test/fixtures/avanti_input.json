@@ -5,72 +5,227 @@
     "$id": 2,
     "@xdata.type": "DPS.Elements.DienstEinteilungen.Generieren.TDPEDienstEinteilungenGenerierenInput.TParameter",
     "tage": [
-      {"datum": "2026-10-05", "wochenende": false},
-      {"datum": "2026-10-06", "wochenende": false},
-      {"datum": "2026-10-07", "wochenende": false},
-      {"datum": "2026-10-08", "wochenende": false},
-      {"datum": "2026-10-09", "wochenende": false},
-      {"datum": "2026-10-10", "wochenende": true},
-      {"datum": "2026-10-11", "wochenende": true},
-      {"datum": "2026-10-12", "wochenende": true},
-      {"datum": "2026-10-13", "wochenende": false},
-      {"datum": "2026-10-14", "wochenende": false}
+      {
+        "datum": "2026-10-05",
+        "wochenende": false
+      },
+      {
+        "datum": "2026-10-06",
+        "wochenende": false
+      },
+      {
+        "datum": "2026-10-07",
+        "wochenende": false
+      },
+      {
+        "datum": "2026-10-08",
+        "wochenende": false
+      },
+      {
+        "datum": "2026-10-09",
+        "wochenende": false
+      },
+      {
+        "datum": "2026-10-10",
+        "wochenende": true
+      },
+      {
+        "datum": "2026-10-11",
+        "wochenende": true
+      },
+      {
+        "datum": "2026-10-12",
+        "wochenende": true
+      },
+      {
+        "datum": "2026-10-13",
+        "wochenende": false
+      },
+      {
+        "datum": "2026-10-14",
+        "wochenende": false
+      }
     ],
     "ressourcen": [
-      {"pofID": "FAKE01_1XO", "pofCode": "TST1", "pofName": "Muster", "pofVorname": "Mia",
-       "pofTyp": "P", "pofIstMitarbeiter": true, "pofDeaktiviert": "0",
-       "beschaeftigungsgrad": "100", "pofListeFaehigkeiten": null},
-      {"pofID": "FIRMA1_1XO", "pofCode": null, "pofName": "Beispiel AG",
-       "pofTyp": "F", "pofIstMitarbeiter": false, "pofDeaktiviert": "0",
-       "beschaeftigungsgrad": "100", "pofListeFaehigkeiten": null},
-      {"pofID": "FAKE02_1XO", "pofCode": "TST2", "pofName": "Beispiel", "pofVorname": "Ben",
-       "pofTyp": "P", "pofIstMitarbeiter": true, "pofDeaktiviert": "0",
-       "beschaeftigungsgrad": "100", "pofListeFaehigkeiten": null},
-      {"pofID": "SYSTEM_1XO", "pofCode": "SYS", "pofName": "Dienstplan, System",
-       "pofTyp": "P", "pofIstMitarbeiter": false, "pofDeaktiviert": "0",
-       "beschaeftigungsgrad": "100", "pofListeFaehigkeiten": null},
-      {"pofID": "FAKE03_1XO", "pofCode": "TST3", "pofName": "Probe", "pofVorname": "Pia",
-       "pofTyp": "P", "pofIstMitarbeiter": true, "pofDeaktiviert": "0",
-       "beschaeftigungsgrad": "100", "pofListeFaehigkeiten": null},
-      {"pofID": "FAKE04_1XO", "pofCode": "TST4", "pofName": "Test", "pofVorname": "Tim",
-       "pofTyp": "P", "pofIstMitarbeiter": true, "pofDeaktiviert": "0",
-       "beschaeftigungsgrad": "100", "pofListeFaehigkeiten": null},
-      {"pofID": "FAKE05_1XO", "pofCode": "TST5", "pofName": "Platzhalter", "pofVorname": "Pau",
-       "pofTyp": "P", "pofIstMitarbeiter": true, "pofDeaktiviert": "0",
-       "beschaeftigungsgrad": "100", "pofListeFaehigkeiten": null},
-      {"pofID": "FAKE06_1XO", "pofCode": "TST6", "pofName": "Fiktiv", "pofVorname": "Fe",
-       "pofTyp": "P", "pofIstMitarbeiter": true, "pofDeaktiviert": "0",
-       "beschaeftigungsgrad": "100", "pofListeFaehigkeiten": null}
+      {
+        "pofID": "FAKE01_1XO",
+        "pofCode": "TST1",
+        "pofName": "Muster",
+        "pofVorname": "Mia",
+        "pofTyp": "P",
+        "pofIstMitarbeiter": true,
+        "pofDeaktiviert": "0",
+        "beschaeftigungsgrad": "100",
+        "pofListeFaehigkeiten": "Schichtleiter, Führerausweis C1"
+      },
+      {
+        "pofID": "FIRMA1_1XO",
+        "pofCode": null,
+        "pofName": "Beispiel AG",
+        "pofTyp": "F",
+        "pofIstMitarbeiter": false,
+        "pofDeaktiviert": "0",
+        "beschaeftigungsgrad": "100",
+        "pofListeFaehigkeiten": null
+      },
+      {
+        "pofID": "FAKE02_1XO",
+        "pofCode": "TST2",
+        "pofName": "Beispiel",
+        "pofVorname": "Ben",
+        "pofTyp": "P",
+        "pofIstMitarbeiter": true,
+        "pofDeaktiviert": "0",
+        "beschaeftigungsgrad": "100",
+        "pofListeFaehigkeiten": null
+      },
+      {
+        "pofID": "SYSTEM_1XO",
+        "pofCode": "SYS",
+        "pofName": "Dienstplan, System",
+        "pofTyp": "P",
+        "pofIstMitarbeiter": false,
+        "pofDeaktiviert": "0",
+        "beschaeftigungsgrad": "100",
+        "pofListeFaehigkeiten": null
+      },
+      {
+        "pofID": "FAKE03_1XO",
+        "pofCode": "TST3",
+        "pofName": "Probe",
+        "pofVorname": "Pia",
+        "pofTyp": "P",
+        "pofIstMitarbeiter": true,
+        "pofDeaktiviert": "0",
+        "beschaeftigungsgrad": "100",
+        "pofListeFaehigkeiten": null,
+        "pofListeFaehigkeiten1": "Schichtleiter Stv"
+      },
+      {
+        "pofID": "FAKE04_1XO",
+        "pofCode": "TST4",
+        "pofName": "Test",
+        "pofVorname": "Tim",
+        "pofTyp": "P",
+        "pofIstMitarbeiter": true,
+        "pofDeaktiviert": "0",
+        "beschaeftigungsgrad": "100",
+        "pofListeFaehigkeiten": null
+      },
+      {
+        "pofID": "FAKE05_1XO",
+        "pofCode": "TST5",
+        "pofName": "Platzhalter",
+        "pofVorname": "Pau",
+        "pofTyp": "P",
+        "pofIstMitarbeiter": true,
+        "pofDeaktiviert": "0",
+        "beschaeftigungsgrad": "100",
+        "pofListeFaehigkeiten": null
+      },
+      {
+        "pofID": "FAKE06_1XO",
+        "pofCode": "TST6",
+        "pofName": "Fiktiv",
+        "pofVorname": "Fe",
+        "pofTyp": "P",
+        "pofIstMitarbeiter": true,
+        "pofDeaktiviert": "0",
+        "beschaeftigungsgrad": "100",
+        "pofListeFaehigkeiten": null
+      }
     ],
     "dienstCodes": [
-      {"ID": "CODE-1N-0000", "kz": "1N", "bez": "Fruehschicht KNZ", "dienstArtCode": "S",
-       "zeitStartText": "06:00", "zeitEndeText": "12:00"},
-      {"ID": "CODE-2N-0000", "kz": "2N", "bez": "Spaetschicht KNZ", "dienstArtCode": "S",
-       "zeitStartText": "11:30", "zeitEndeText": "18:30"},
-      {"ID": "CODE-3N-0000", "kz": "3N", "bez": "Nachtschicht KNZ", "dienstArtCode": "S",
-       "zeitStartText": "18:00", "zeitEndeText": "06:30"},
-      {"ID": "CODE-R-00000", "kz": "R", "bez": "Ruhe- und Feiertag", "dienstArtCode": "A",
-       "zeitStartText": null, "zeitEndeText": null}
+      {
+        "ID": "CODE-1N-0000",
+        "kz": "1N",
+        "bez": "Fruehschicht KNZ",
+        "dienstArtCode": "S",
+        "zeitStartText": "06:00",
+        "zeitEndeText": "12:00"
+      },
+      {
+        "ID": "CODE-2N-0000",
+        "kz": "2N",
+        "bez": "Spaetschicht KNZ",
+        "dienstArtCode": "S",
+        "zeitStartText": "11:30",
+        "zeitEndeText": "18:30"
+      },
+      {
+        "ID": "CODE-3N-0000",
+        "kz": "3N",
+        "bez": "Nachtschicht KNZ",
+        "dienstArtCode": "S",
+        "zeitStartText": "18:00",
+        "zeitEndeText": "06:30"
+      },
+      {
+        "ID": "CODE-R-00000",
+        "kz": "R",
+        "bez": "Ruhe- und Feiertag",
+        "dienstArtCode": "A",
+        "zeitStartText": null,
+        "zeitEndeText": null
+      }
     ]
   },
   "daten": {
     "$id": 3,
     "dienstEinteilungen": [
-      {"pofID": "FAKE01_1XO", "zeitStart": "2026-10-06T06:00:00.000",
-       "dienstCodeKz": "1N", "dienstCodeBez": "Fruehschicht KNZ", "wunsch": null},
-      {"pofID": "FAKE02_1XO", "zeitStart": "2026-10-07T07:00:00.000",
-       "dienstCodeKz": "BV", "dienstCodeBez": "Buero Vormittag",
-       "wunsch": {"ablehnung": null, "kenntnis": null,
-                  "genehmigung": {"pofBez": "Admin", "zeitPunkt": "2026-09-01T10:00:00.000"}}},
-      {"pofID": "FAKE03_1XO", "zeitStart": "2026-10-08T11:30:00.000",
-       "dienstCodeKz": "2N", "dienstCodeBez": "Spaetschicht KNZ",
-       "wunsch": {"genehmigung": null, "kenntnis": null,
-                  "ablehnung": {"pofBez": "Admin", "zeitPunkt": "2026-09-01T10:00:00.000"}}},
-      {"pofID": "FAKE04_1XO", "zeitStart": "2026-10-09T18:00:00.000",
-       "dienstCodeKz": "3N", "dienstCodeBez": "Nachtschicht KNZ",
-       "wunsch": {"genehmigung": null, "ablehnung": null, "kenntnis": null}},
-      {"pofID": "OUTSIDE_1XO", "zeitStart": "2026-10-09T06:00:00.000",
-       "dienstCodeKz": "1N", "dienstCodeBez": "Fruehschicht KNZ", "wunsch": null}
+      {
+        "pofID": "FAKE01_1XO",
+        "zeitStart": "2026-10-06T06:00:00.000",
+        "dienstCodeKz": "1N",
+        "dienstCodeBez": "Fruehschicht KNZ",
+        "wunsch": null
+      },
+      {
+        "pofID": "FAKE02_1XO",
+        "zeitStart": "2026-10-07T07:00:00.000",
+        "dienstCodeKz": "BV",
+        "dienstCodeBez": "Buero Vormittag",
+        "wunsch": {
+          "ablehnung": null,
+          "kenntnis": null,
+          "genehmigung": {
+            "pofBez": "Admin",
+            "zeitPunkt": "2026-09-01T10:00:00.000"
+          }
+        }
+      },
+      {
+        "pofID": "FAKE03_1XO",
+        "zeitStart": "2026-10-08T11:30:00.000",
+        "dienstCodeKz": "2N",
+        "dienstCodeBez": "Spaetschicht KNZ",
+        "wunsch": {
+          "genehmigung": null,
+          "kenntnis": null,
+          "ablehnung": {
+            "pofBez": "Admin",
+            "zeitPunkt": "2026-09-01T10:00:00.000"
+          }
+        }
+      },
+      {
+        "pofID": "FAKE04_1XO",
+        "zeitStart": "2026-10-09T18:00:00.000",
+        "dienstCodeKz": "3N",
+        "dienstCodeBez": "Nachtschicht KNZ",
+        "wunsch": {
+          "genehmigung": null,
+          "ablehnung": null,
+          "kenntnis": null
+        }
+      },
+      {
+        "pofID": "OUTSIDE_1XO",
+        "zeitStart": "2026-10-09T06:00:00.000",
+        "dienstCodeKz": "1N",
+        "dienstCodeBez": "Fruehschicht KNZ",
+        "wunsch": null
+      }
     ]
   }
 }

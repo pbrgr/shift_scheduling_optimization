@@ -116,12 +116,24 @@ def config_from_avanti(
         raise AvantiError("parameter.tage is empty")
 
     #employees, numbered; identity is carried through `resources`
-    resources = {}
+    resources, skills = {}, {}
     for number, res in enumerate(_employee_resources(parameter), start=1):
         resources[number] = {
             "pofID": _get(res, "pofID", "ressource"),
             "pofCode": res.get("pofCode") or f"MA{number}",
         }
+        #skills arrive as a comma-separated string, in up to three language
+        #variants; the union makes matching independent of the maintained
+        #language
+        parsed = {
+            part.strip()
+            for key in ("pofListeFaehigkeiten", "pofListeFaehigkeiten1",
+                        "pofListeFaehigkeiten2")
+            for part in (res.get(key) or "").split(",")
+            if part.strip()
+        }
+        if parsed:
+            skills[number] = tuple(sorted(parsed))
     if not resources:
         raise AvantiError("no plannable employees after filtering ressourcen")
     by_pof_id = {r["pofID"]: e for e, r in resources.items()}
@@ -173,6 +185,7 @@ def config_from_avanti(
         days=days,
         weekends_override=tuple(weekends),
         employees=list(resources),
+        skills=skills,
         dayoff_assignments=[],
         dayoff_requests=[],
         fixed_assignments=fixed,

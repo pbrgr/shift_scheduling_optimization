@@ -86,6 +86,16 @@ class ScheduleConfig:
     weight_forbidden_transition: int = 50 #per occurrence of a "reward 0" pair
     weight_weekend_cap: int = 30 #per weekend day above max_weekend_days_worked
 
+    #skills per employee, as delivered by Avanti (pofListeFaehigkeiten).
+    #leader_skills names which of them count as shift leader, and with which
+    #priority (1 = primary). the rule "at least one leader per shift" only
+    #arms itself once somebody in the selection actually carries a skill,
+    #so configs without skill data stay unaffected
+    skills: dict[int, tuple[str, ...]] = field(default_factory=dict)
+    leader_skills: dict[str, int] = field(default_factory=dict)
+    weight_missing_leader: int = 80 #per shift/day without any leader
+    weight_leader_priority: int = 2 #per shift/day led only by priority > 1
+
     #CP-SAT detects and breaks symmetries itself at its default of 2. Measured
     #over 3 runs each on DEFAULT_CONFIG, that costs more search time than it
     #saves here: level 2 landed at a gap of 38-43, levels 0 and 1 at 28-32.
@@ -139,6 +149,18 @@ class ScheduleConfig:
             for (employee, day), shifts in by_day.items()
             if len(shifts) > 1
         ]
+
+    @property
+    def leader_employees(self) -> dict[int, int]:
+        #employee -> best (lowest) leader priority; matching is
+        #case-insensitive on the exact skill name
+        wanted = {name.casefold(): prio for name, prio in self.leader_skills.items()}
+        leaders = {}
+        for employee, skills in self.skills.items():
+            prios = [wanted[s.casefold()] for s in skills if s.casefold() in wanted]
+            if prios:
+                leaders[employee] = min(prios)
+        return leaders
 
     def _duplicates(self, values) -> list:
         seen, duplicates = set(), []
@@ -245,6 +267,15 @@ class ScheduleConfig:
             for shift in (prev_shift, next_shift):
                 if shift not in known_shifts:
                     found.append(f"transition refers to unknown shift {shift!r}")
+
+        for employee in self.skills:
+            if employee not in known_employees:
+                found.append(f"skills listed for unknown employee {employee}")
+        for name, prio in self.leader_skills.items():
+            if prio < 1:
+                found.append(
+                    f"leader skill {name!r} has priority {prio}, expected >= 1"
+                )
 
         found += [
             f"employee {employee} on {day} demanded as {'/'.join(shifts)}"
@@ -358,6 +389,9 @@ DEFAULT_CONFIG = ScheduleConfig(
     compensation_shift="Komp",
     compensation_follows=("3N", "1N3N"),
     composite_shifts={"1N3N": ("1N", "3N")},
+    #exact wording as maintained in the Avanti Datenverwaltung; the rule
+    #stays dormant until the selection contains somebody carrying one
+    leader_skills={"Schichtleiter": 1, "Schichtleiter Stv": 2},
 
     min_ee=3,
     max_ee=5,

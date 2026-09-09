@@ -106,6 +106,37 @@ def add_cover_constraints(sm: ScheduleModel, config: ScheduleConfig) -> None:
             ))
 
 
+def add_leader_rule(sm: ScheduleModel, config: ScheduleConfig) -> None:
+    #"at least one shift leader (or deputy) per shift": penalised per shift
+    #and day without one, plus a small nudge to prefer priority-1 leaders.
+    #armed only when somebody in the selection actually carries the skill,
+    #so a selection without maintained skills is not flooded with penalties
+    leaders = config.leader_employees
+    if not leaders:
+        return
+
+    primary = [e for e, prio in leaders.items() if prio == 1]
+
+    for atomic in config.atomic_working_shifts:
+        indices = [config.shifts.index(s) for s in config.shifts_covering(atomic)]
+        for d in range(config.num_days):
+            assigned = [sm.work[e, s, d] for e in leaders for s in indices]
+            sm.add_int_costs(*add_soft_sum(
+                sm.model, assigned, 1, len(assigned), len(assigned),
+                config.weight_missing_leader, 0,
+                f"leader_{atomic}_{d}",
+            ))
+
+            #nudge towards priority-1 leaders, but only when both tiers exist
+            if primary and len(primary) < len(leaders):
+                assigned_p1 = [sm.work[e, s, d] for e in primary for s in indices]
+                sm.add_int_costs(*add_soft_sum(
+                    sm.model, assigned_p1, 1, len(assigned_p1), len(assigned_p1),
+                    config.weight_leader_priority, 0,
+                    f"leader_p1_{atomic}_{d}",
+                ))
+
+
 def add_compensation_rule(sm: ScheduleModel, config: ScheduleConfig) -> None:
     #a compensation day is only allowed right after a night duty
     if config.compensation_shift is None:
@@ -267,6 +298,7 @@ def build_model(config: ScheduleConfig) -> ScheduleModel:
 
     add_one_shift_per_day(sm, config)
     add_cover_constraints(sm, config)
+    add_leader_rule(sm, config)
     add_compensation_rule(sm, config)
     add_transitions(sm, config, fmt)
     add_assignments_and_requests(sm, config, fmt)

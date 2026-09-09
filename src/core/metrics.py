@@ -36,6 +36,11 @@ class ScheduleMetrics:
     fair_weekend_days: int
     max_weekend_days_worked: int
 
+    #shift/day instances without any leader resp. led only by priority > 1.
+    #None when the leader rule is not armed (no skill carriers in selection)
+    shifts_without_leader: int | None = None
+    shifts_only_deputy_led: int | None = None
+
     @property
     def workload_spread(self) -> tuple[int, int]:
         return min(self.shifts_worked.values()), max(self.shifts_worked.values())
@@ -119,12 +124,30 @@ def compute_metrics(schedule: Schedule, config: ScheduleConfig) -> ScheduleMetri
         for e, day, shift in config.all_requests
     }
 
+    leaders = config.leader_employees
+    without_leader = only_deputy = None
+    if leaders:
+        primary = {e for e, prio in leaders.items() if prio == 1}
+        without_leader = only_deputy = 0
+        for atomic in config.atomic_working_shifts:
+            covering = set(config.shifts_covering(atomic))
+            for d in range(config.num_days):
+                on_shift = {
+                    e for e, days in schedule.items() if days[d] in covering
+                }
+                if not on_shift & set(leaders):
+                    without_leader += 1
+                elif not on_shift & primary:
+                    only_deputy += 1
+
     return ScheduleMetrics(
         shifts_worked=shifts_worked,
         weekend_days_worked=weekend_days_worked,
         coverage=coverage,
         understaffed_slots=understaffed,
         overstaffed_slots=overstaffed,
+        shifts_without_leader=without_leader,
+        shifts_only_deputy_led=only_deputy,
         rewarded_transitions=rewarded,
         forbidden_transitions=forbidden,
         requests_granted=requests_granted,
@@ -179,5 +202,18 @@ def summary_lines(metrics: ScheduleMetrics, config: ScheduleConfig) -> list[str]
 
     granted, total = metrics.requests_fulfilled
     lines.append("Requests fulfilled: %d of %d" % (granted, total))
+
+    if metrics.shifts_without_leader is None:
+        if config.leader_skills:
+            lines.append(
+                "Leader rule DORMANT: no employee in this selection carries "
+                "any of %s - check the skill wording in Avanti"
+                % list(config.leader_skills)
+            )
+    else:
+        lines.append(
+            "Shifts without leader: %d, led only by deputy: %d"
+            % (metrics.shifts_without_leader, metrics.shifts_only_deputy_led)
+        )
 
     return lines

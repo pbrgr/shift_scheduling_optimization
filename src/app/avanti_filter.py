@@ -48,6 +48,12 @@ def run(stdin=None, stdout=None, template=DEFAULT_CONFIG,
             config.num_employees, config.num_days,
             config.days[0], config.days[-1], len(instance.occupied),
         )
+        if config.leader_skills and not config.leader_employees:
+            logger.warning(
+                "Leader rule stays dormant: nobody in this selection carries "
+                "any of %s - check the skill wording in the Avanti DV",
+                list(config.leader_skills),
+            )
         sm = build_model(config)  #raises ValueError on an invalid config
     except (AvantiError, ValueError) as ex:
         logger.error("%s", ex)

@@ -194,6 +194,13 @@ def render_report(
             flag="sollte 0 sein" if metrics.total_forbidden_transitions else "",
         ),
         _tile(f"{granted}/{total}", "Wünsche erfüllt"),
+    ]
+    if metrics.shifts_without_leader is not None:
+        tiles.append(_tile(
+            str(metrics.shifts_without_leader), "Schichten ohne Schichtleiter",
+            flag="Anforderung verletzt" if metrics.shifts_without_leader else "",
+        ))
+    tiles += [
         _tile(
             f"{low}–{high}", "Schicht-Slots pro MA",
             flag="%d MA außerhalb" % len(metrics.employees_outside_fair_band)

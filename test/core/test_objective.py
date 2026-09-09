@@ -72,6 +72,20 @@ def recomputed_objective(schedule: dict, config: ScheduleConfig) -> int:
             total += config.weight_understaffing * max(0, config.min_ee - n)
             total += config.weight_overstaffing * max(0, n - config.max_ee)
 
+    #leader rule, armed only when somebody carries a leader skill
+    leaders = config.leader_employees
+    if leaders:
+        primary = {e for e, prio in leaders.items() if prio == 1}
+        both_tiers = bool(primary) and len(primary) < len(leaders)
+        for atomic in config.atomic_working_shifts:
+            covering = set(config.shifts_covering(atomic))
+            for d in range(config.num_days):
+                on_shift = {e for e, days in schedule.items() if days[d] in covering}
+                if not on_shift & set(leaders):
+                    total += config.weight_missing_leader
+                if both_tiers and not on_shift & primary:
+                    total += config.weight_leader_priority
+
     #weekend fairness penalises days below the fair share; a compensation
     #day counts as free just like the rest shift
     for days in schedule.values():
@@ -175,6 +189,18 @@ def test_objective_matches_with_composite_and_compensation_shifts(
         compensation_follows=("3N", "1N3N"),
         composite_shifts={"1N3N": ("1N", "3N")},
         transitions=[("2N", "1N3N", -4), ("1N3N", "Komp", -4), ("3N", "1N", 0)],
+    )
+    _, solver, schedule = solve(config)
+
+    assert recomputed_objective(schedule, config) == solver.objective_value
+
+
+def test_objective_matches_with_the_leader_rule_armed(objective_config, solve):
+    config = replace(
+        objective_config,
+        leader_skills={"Schichtleiter": 1, "Schichtleiter Stv": 2},
+        skills={1: ("Schichtleiter",), 2: ("Schichtleiter Stv",),
+                3: ("Arzt",)},
     )
     _, solver, schedule = solve(config)
 

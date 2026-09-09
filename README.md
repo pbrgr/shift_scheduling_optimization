@@ -170,6 +170,11 @@ every rule holds exactly.
 
 Penalised rules:
 
+- at least one shift leader per shift and day (`leader_skills` names the
+  Avanti Fähigkeiten and their priority; priority-1 leaders are preferred
+  over deputies). The rule arms itself only when the selection contains a
+  skill carrier, and warns loudly when it stays dormant
+
 - `min_ee` to `max_ee` employees per atomic working shift and day (`R` and
   `Komp` are not covered); a composite `1N3N` counts towards both its parts
 - transitions with reward `0` — forbidden in the KNZ sense (a night part
