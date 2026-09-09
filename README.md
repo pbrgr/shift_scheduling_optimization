@@ -50,6 +50,12 @@ status 0 on success:
 python -m src.app.avanti_filter < input.json > output.json
 ```
 
+For the DPService itself, `src/core/wis_main.py` is a drop-in replacement for
+the original entry point — same path, same call, same contract. Swapping the
+content of the service's `Lib\Avanti` folder for a tagged state of this
+repository is the entire integration; no Delphi change is needed to run the
+new solver (the output format switch is the one open decision).
+
 `src/infrastructure/avanti.py` translates the payload into a
 `ScheduleConfig`: it filters the resources to real active employees, takes
 period and weekend flags (including holidays) from Avanti, treats existing

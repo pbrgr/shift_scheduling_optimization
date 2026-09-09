@@ -63,12 +63,19 @@ def log_objective_terms(logger, solver, sm: ScheduleModel) -> None:
             )
 
 
-def solve(sm: ScheduleModel, config: ScheduleConfig) -> tuple[cp_model.CpSolver, int]:
+def solve(sm: ScheduleModel, config: ScheduleConfig,
+          show_progress: bool = True) -> tuple[cp_model.CpSolver, int]:
     solver = cp_model.CpSolver()
     #the transition rewards make proving optimality expensive, so cap the run
     solver.parameters.max_time_in_seconds = config.max_solve_seconds
     solver.parameters.symmetry_level = config.symmetry_level
-    status = solver.solve(sm.model, cp_model.ObjectiveSolutionPrinter())
+
+    #the progress printer writes to stdout; the Avanti filter must keep
+    #stdout as pure JSON, so it solves silently
+    if show_progress:
+        status = solver.solve(sm.model, cp_model.ObjectiveSolutionPrinter())
+    else:
+        status = solver.solve(sm.model)
 
     return solver, status
 

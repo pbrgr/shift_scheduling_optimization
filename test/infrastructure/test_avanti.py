@@ -174,3 +174,20 @@ def test_real_avanti_examples_parse(path):
     #every atomic shift got a real dienstCodeID
     for shift in config.atomic_working_shifts:
         assert instance.codes[shift].dienst_code_id
+
+
+def test_real_stdout_stays_pure_json_even_with_progress_output(
+    payload, tmp_path, capsys
+):
+    #regression: the CP-SAT progress printer used to write "Solution 0, ..."
+    #lines to stdout, corrupting the JSON when the filter runs as a real
+    #Unix filter (shell redirection). Silvan hit the very same issue in his
+    #wis_main.py and removed the printer there
+    run(
+        stdin=io.StringIO(json.dumps(payload)),
+        stdout=io.StringIO(),
+        template=RELAXED,
+        output_path=str(tmp_path),
+    )
+
+    assert capsys.readouterr().out == ""

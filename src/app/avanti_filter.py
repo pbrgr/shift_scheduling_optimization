@@ -60,7 +60,7 @@ def run(stdin=None, stdout=None, template=DEFAULT_CONFIG,
         return 1
 
     logger.info("Solving (time limit: %.0fs)", config.max_solve_seconds)
-    solver, status = solve(sm, config)
+    solver, status = solve(sm, config, show_progress=False)
     status_name = solver.StatusName(status)
     logger.info("Solver finished with status: %s", status_name)
 
