@@ -70,6 +70,17 @@ python -m src.infrastructure.avanti_generator --seed 42 > input.json
 python -m src.app.avanti_filter < input.json > output.json
 ```
 
+`src/app/avanti_remote.py` closes the loop against the Avanti test system
+(VPN and login required, password via `AVANTI_PASSWORD`): it fetches a real
+input via the DPService test endpoint `scheduling-optimization-get-data`,
+solves locally, and can fetch the server-side legacy run for comparison
+(`--compare`) or the maintained shift sequences (`--abfolgen`). Strictly
+read-only — it never writes to Avanti:
+
+```bash
+python -m src.app.avanti_remote --start 2026-02-28 --ende 2026-03-31 --compare
+```
+
 The reader touches only the fields it needs and fails loudly on anything
 missing, so a payload format change surfaces as a clear error instead of a
 wrong plan. Output entries carry `pofID`, `dienstCodeID` and `zeitStart`
