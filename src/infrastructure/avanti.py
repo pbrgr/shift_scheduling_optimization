@@ -240,3 +240,44 @@ def schedule_to_avanti(
         "solver": {"status": solver_status},
         "dienstEinteilungen": einteilungen,
     }
+
+
+def schedule_to_avanti_legacy(
+        schedule: dict,
+        instance: AvantiInstance,
+        solver_status: str,
+) -> dict:
+    """The output contract of the original wis_main.py, so the existing
+    DPService insert logic works without any Delphi change: one entry per
+    employee and day (free days included, the client's conflict check skips
+    what it must), the shift kz in "needtochange1", zeitStart as bare date.
+
+    Concepts the old contract cannot express are mapped down: a composite
+    day becomes two entries (its parts), a compensation day is emitted as
+    the rest shift.
+    """
+    config = instance.config
+    dates = {
+        day: dt.isoformat()
+        for day, dt in zip(config.days, to_dates(config.days, config.year))
+    }
+
+    einteilungen = []
+    for employee, days in schedule.items():
+        identity = instance.resources[employee]
+        for d, shift in enumerate(days):
+            if shift == config.compensation_shift:
+                shift = config.rest_shift
+            for part in config.composite_shifts.get(shift, (shift,)):
+                einteilungen.append({
+                    "pofID": identity["pofID"],
+                    "pofCode": identity["pofCode"],
+                    "zeitStart": dates[config.days[d]],
+                    "needtochange1": part,
+                })
+
+    return {
+        "version": "1",
+        "solver": {"status": solver_status},
+        "dienstEinteilungen": einteilungen,
+    }

@@ -16,7 +16,12 @@ from ortools.sat.python import cp_model
 from src.app.generate_schedule import extract_schedule, log_objective_terms, solve
 from src.core.metrics import compute_metrics, summary_lines
 from src.core.model import build_model
-from src.infrastructure.avanti import AvantiError, config_from_avanti, schedule_to_avanti
+from src.infrastructure.avanti import (
+    AvantiError,
+    config_from_avanti,
+    schedule_to_avanti,
+    schedule_to_avanti_legacy,
+)
 from src.infrastructure.config import DEFAULT_CONFIG
 from src.infrastructure.logger import setup_logging
 from src.infrastructure.report import write_report
@@ -87,7 +92,11 @@ def run(stdin=None, stdout=None, template=DEFAULT_CONFIG,
     )
     logger.info("HTML report written to %s", report_path)
 
-    result = schedule_to_avanti(schedule, instance, status_name)
+    build = (schedule_to_avanti_legacy if config.legacy_output
+             else schedule_to_avanti)
+    result = build(schedule, instance, status_name)
+    logger.info("Output format: %s",
+                "legacy (needtochange1)" if config.legacy_output else "v2")
     json.dump(result, stdout)
     stdout.write("\n")
     logger.info(

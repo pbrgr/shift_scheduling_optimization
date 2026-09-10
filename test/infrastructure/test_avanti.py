@@ -18,7 +18,9 @@ FIXTURE = os.path.join(os.path.dirname(__file__), "..", "fixtures",
 
 #the fixture has 6 employees, far fewer than the KNZ coverage of 3 to 5
 #per shift needs; the relaxed bounds keep it solvable in milliseconds
-RELAXED = replace(DEFAULT_CONFIG, min_ee=1, max_ee=2, max_solve_seconds=10.0)
+#legacy_output off: these tests assert the v2 target format
+RELAXED = replace(DEFAULT_CONFIG, min_ee=1, max_ee=2, max_solve_seconds=10.0,
+                  legacy_output=False)
 
 
 @pytest.fixture
@@ -191,3 +193,52 @@ def test_real_stdout_stays_pure_json_even_with_progress_output(
     )
 
     assert capsys.readouterr().out == ""
+
+
+def test_legacy_output_matches_the_old_wis_main_contract(payload):
+    from src.infrastructure.avanti import schedule_to_avanti_legacy
+
+    instance = config_from_avanti(payload, replace(RELAXED, legacy_output=True))
+    config = instance.config
+
+    schedule = {e: ["R"] * config.num_days for e in config.employees}
+    schedule[1][0] = "1N3N"  #two legacy entries: 1N and 3N
+    schedule[2][3] = "2N"
+    schedule[2][4] = "Komp"  #emitted as the rest shift
+
+    out = schedule_to_avanti_legacy(schedule, instance, "OPTIMAL")
+    entries = out["dienstEinteilungen"]
+
+    #one entry per employee and day, plus one extra for the composite
+    assert len(entries) == config.num_employees * config.num_days + 1
+    #the old field names and the bare date, exactly as the Delphi side reads
+    sample = entries[0]
+    assert set(sample) == {"pofID", "pofCode", "zeitStart", "needtochange1"}
+    assert "T" not in sample["zeitStart"]
+
+    by_key = {}
+    for e in entries:
+        by_key.setdefault((e["pofID"], e["zeitStart"]), []).append(e["needtochange1"])
+    pof1 = instance.resources[1]["pofID"]
+    pof2 = instance.resources[2]["pofID"]
+    assert sorted(by_key[(pof1, "2026-10-05")]) == ["1N", "3N"]
+    assert by_key[(pof2, "2026-10-08")] == ["2N"]
+    assert by_key[(pof2, "2026-10-09")] == ["R"]  #Komp mapped down
+
+
+def test_filter_defaults_to_legacy_output(payload, tmp_path):
+    #the shipped default must keep the untouched DPService insert working
+    assert DEFAULT_CONFIG.legacy_output is True
+
+    stdout = io.StringIO()
+    exit_code = run(
+        stdin=io.StringIO(json.dumps(payload)),
+        stdout=stdout,
+        template=replace(RELAXED, legacy_output=True),
+        output_path=str(tmp_path),
+    )
+
+    assert exit_code == 0
+    result = json.loads(stdout.getvalue())
+    assert all("needtochange1" in e for e in result["dienstEinteilungen"])
+    assert all("dienstCodeID" not in e for e in result["dienstEinteilungen"])

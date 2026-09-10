@@ -106,6 +106,13 @@ class ScheduleConfig:
     #them; one 0/1 flag per day, aligned with `days`
     weekends_override: tuple[int, ...] | None = None
 
+    #emit the output format of the original wis_main.py (needtochange1 with
+    #the shift kz, date-only zeitStart, one entry per employee and day incl.
+    #free days), so the existing DPService insert logic keeps working
+    #untouched. flip to False once the Delphi side reads the target format
+    #(dienstCodeID + timestamp, working shifts only)
+    legacy_output: bool = True
+
     def days_on_weekday(self, weekday: int) -> list[str]:
         return [
             day
